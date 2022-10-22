@@ -1,0 +1,14 @@
+{
+  "name": "ray-tracer",
+  "version": "1.0.0",
+  "description": "A basic ray tracer in javascript",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Leanne Werner",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.2.1"
+  }
+}
