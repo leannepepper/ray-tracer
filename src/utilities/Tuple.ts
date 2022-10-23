@@ -1,3 +1,5 @@
+import { EPLISILON } from "./mathUtils";
+
 export class Tuple {
   x: number;
   y: number;
@@ -20,18 +22,27 @@ export class Tuple {
     );
   }
 
+  dot(tuple: Tuple) {
+    return (
+      this.x * tuple.x + this.y * tuple.y + this.z * tuple.z + this.w * tuple.w
+    );
+  }
+
+  equals(tuple: Tuple) {
+    return (
+      Math.abs(this.x - tuple.x) < EPLISILON &&
+      Math.abs(this.y - tuple.y) < EPLISILON &&
+      Math.abs(this.z - tuple.z) < EPLISILON &&
+      Math.abs(this.w - tuple.w) < EPLISILON
+    );
+  }
+
   subtract(tuple: Tuple) {
     return new Tuple(
       this.x - tuple.x,
       this.y - tuple.y,
       this.z - tuple.z,
       this.w - tuple.w
-    );
-  }
-
-  dot(tuple: Tuple) {
-    return (
-      this.x * tuple.x + this.y * tuple.y + this.z * tuple.z + this.w * tuple.w
     );
   }
 }
