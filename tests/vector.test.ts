@@ -1,10 +1,12 @@
 import { Vector } from "../src/utilities/Vector";
 
 test("Vector", () => {
-  expect(new Vector(1, 2, 3)).toEqual({
-    x: 1,
-    y: 2,
-    z: 3,
-    w: 0,
-  });
+  expect(new Vector(1, 2, 3)).toEqual(
+    expect.objectContaining({
+      x: 1,
+      y: 2,
+      z: 3,
+      w: 0,
+    })
+  );
 });
