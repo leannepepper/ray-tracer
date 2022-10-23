@@ -1,7 +1,7 @@
-const vector = require('../utilities/vector')
+const Vector = require('../utilities/Vector')
 
-test('vector', () => {
-  expect(vector(1, 2, 3)).toEqual({
+test('Vector', () => {
+  expect(new Vector(1, 2, 3)).toEqual({
     x: 1,
     y: 2,
     z: 3,
