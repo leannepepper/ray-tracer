@@ -11,6 +11,20 @@ test("Vector", () => {
   );
 });
 
+test("Vector cross product", () => {
+  expect(new Vector(1, 2, 3).cross(new Vector(2, 3, 4))).toEqual(
+    expect.objectContaining({
+      x: -1,
+      y: 2,
+      z: -1,
+    })
+  );
+});
+
+test("Vector dot product", () => {
+  expect(new Vector(1, 2, 3).dot(new Vector(1, 2, 3))).toEqual(14);
+});
+
 test(" Vector magnitude", () => {
   expect(new Vector(1, 2, 3).magnitude()).toEqual(3.7416573867739413);
 });
