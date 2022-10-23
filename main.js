@@ -1,5 +1,4 @@
-import { vector } from '../utilities/vector'
-import { add } from '../utilities/mathUtils'
+import { Vector } from './utilities/Vector'
 
 class Interface {
   constructor () {
@@ -12,8 +11,8 @@ class Interface {
 
   _initEvents () {
     // Add two vectors together
-    const vectorA = vector(1, 2, 3)
-    const vectorB = vector(4, 5, 6)
+    const vectorA = new Vector(1, 2, 3)
+    const vectorB = new Vector(4, 5, 6)
 
     console.log(vectorA.add(vectorB))
   }
