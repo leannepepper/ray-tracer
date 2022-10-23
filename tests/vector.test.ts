@@ -10,3 +10,22 @@ test("Vector", () => {
     })
   );
 });
+
+test(" Vector magnitude", () => {
+  expect(new Vector(1, 2, 3).magnitude()).toEqual(3.7416573867739413);
+});
+
+test("Vector normalize", () => {
+  expect(new Vector(1, 2, 3).normalize()).toEqual(
+    expect.objectContaining({
+      x: 0.2672612419124244,
+      y: 0.5345224838248488,
+      z: 0.8017837257372732,
+      w: 0,
+    })
+  );
+});
+
+test("Magnitude of a normalized Vector", () => {
+  expect(new Vector(1, 2, 3).normalize().magnitude()).toEqual(1);
+});
