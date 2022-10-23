@@ -6,14 +6,12 @@
 // add, subtract, dot, cross, magnitude, normalize, toString
 //
 
-interface Point {
+export class Point {
   x: number;
   y: number;
   z: number;
   w?: number;
-}
 
-class Point {
   constructor(x: number, y: number, z: number) {
     this.x = x;
     this.y = y;
@@ -33,5 +31,3 @@ class Point {
     return this.x * point.x + this.y * point.y + this.z * point.z;
   }
 }
-
-module.exports = Point;

@@ -6,14 +6,12 @@
 // add, subtract, dot, cross, magnitude, normalize, toString
 //
 
-interface Vector {
+export class Vector {
   x: number;
   y: number;
   z: number;
   w?: number;
-}
 
-class Vector {
   constructor(x: number, y: number, z: number) {
     this.x = x;
     this.y = y;
@@ -33,5 +31,3 @@ class Vector {
     return this.x * vector.x + this.y * vector.y + this.z * vector.z;
   }
 }
-
-module.exports = Vector;
