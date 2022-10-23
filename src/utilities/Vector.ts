@@ -6,28 +6,18 @@
 // add, subtract, dot, cross, magnitude, normalize, toString
 //
 
-export class Vector {
+import { Tuple } from "./Tuple";
+
+export class Vector extends Tuple {
   x: number;
   y: number;
   z: number;
-  w?: number;
 
   constructor(x: number, y: number, z: number) {
+    super(x, y, z, 0);
     this.x = x;
     this.y = y;
     this.z = z;
     this.w = 0;
-  }
-
-  add(vector: Vector) {
-    return new Vector(this.x + vector.x, this.y + vector.y, this.z + vector.z);
-  }
-
-  subtract(vector: Vector) {
-    return new Vector(this.x - vector.x, this.y - vector.y, this.z - vector.z);
-  }
-
-  dot(vector: Vector) {
-    return this.x * vector.x + this.y * vector.y + this.z * vector.z;
   }
 }
