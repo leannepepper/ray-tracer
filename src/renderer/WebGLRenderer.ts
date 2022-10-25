@@ -8,7 +8,7 @@ export class WebGLRenderer {
 
   constructor() {
     this.canvas = document.createElement("canvas");
-    this.gl = this.canvas.getContext("webgl");
+    this.gl = this.canvas.getContext("webgl", { preserveDrawingBuffer: true });
     this.width = 100;
     this.height = 100;
 
@@ -33,4 +33,26 @@ export class WebGLRenderer {
   getContext() {
     return this.gl;
   }
+
+  // Save the canvas as a PNG image
+  saveAsPNG() {
+    this.canvas.toBlob((blob) => {
+      saveBlob(
+        blob,
+        `screencapture-${this.canvas.width}x${this.canvas.height}.png`
+      );
+    });
+  }
 }
+
+const saveBlob = (function () {
+  const a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style.display = "none";
+  return function saveData(blob, fileName) {
+    const url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = fileName;
+    a.click();
+  };
+})();
