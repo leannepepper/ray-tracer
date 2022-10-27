@@ -1,10 +1,15 @@
 export class Matrix2 {
   elements: number[][];
 
-  constructor() {
+  constructor(
+    n11: number = 1,
+    n12: number = 0,
+    n21: number = 0,
+    n22: number = 1
+  ) {
     this.elements = [
-      [1, 0],
-      [0, 1],
+      [n11, n12],
+      [n21, n22],
     ];
   }
 
@@ -21,11 +26,21 @@ export class Matrix2 {
 export class Matrix3 {
   elements: number[][];
 
-  constructor() {
+  constructor(
+    n11: number = 1,
+    n12: number = 0,
+    n13: number = 0,
+    n21: number = 0,
+    n22: number = 1,
+    n23: number = 0,
+    n31: number = 0,
+    n32: number = 0,
+    n33: number = 1
+  ) {
     this.elements = [
-      [1, 0, 0],
-      [0, 1, 0],
-      [0, 0, 1],
+      [n11, n12, n13],
+      [n21, n22, n23],
+      [n31, n32, n33],
     ];
   }
 
@@ -57,12 +72,29 @@ export class Matrix3 {
 export class Matrix4 {
   elements: number[][];
 
-  constructor() {
+  constructor(
+    n11: number = 1,
+    n12: number = 0,
+    n13: number = 0,
+    n14: number = 0,
+    n21: number = 0,
+    n22: number = 1,
+    n23: number = 0,
+    n24: number = 0,
+    n31: number = 0,
+    n32: number = 0,
+    n33: number = 1,
+    n34: number = 0,
+    n41: number = 0,
+    n42: number = 0,
+    n43: number = 0,
+    n44: number = 1
+  ) {
     this.elements = [
-      [1, 0, 0, 0],
-      [0, 1, 0, 0],
-      [0, 0, 1, 0],
-      [0, 0, 0, 1],
+      [n11, n12, n13, n14],
+      [n21, n22, n23, n24],
+      [n31, n32, n33, n34],
+      [n41, n42, n43, n44],
     ];
   }
 
@@ -100,6 +132,72 @@ export class Matrix4 {
     this.elements[3][1] = n42;
     this.elements[3][2] = n43;
     this.elements[3][3] = n44;
+
+    return this;
+  }
+
+  multiply(a: Matrix4) {
+    return this.multiplyMatrices(this, a);
+  }
+
+  multiplyMatrices(a: Matrix4, b: Matrix4) {
+    const aElements = a.elements;
+    const bElements = b.elements;
+    const tElements = this.elements;
+
+    const a11 = aElements[0][0],
+      a12 = aElements[0][1],
+      a13 = aElements[0][2],
+      a14 = aElements[0][3];
+    const a21 = aElements[1][0],
+      a22 = aElements[1][1],
+      a23 = aElements[1][2],
+      a24 = aElements[1][3];
+    const a31 = aElements[2][0],
+      a32 = aElements[2][1],
+      a33 = aElements[2][2],
+      a34 = aElements[2][3];
+    const a41 = aElements[3][0],
+      a42 = aElements[3][1],
+      a43 = aElements[3][2],
+      a44 = aElements[3][3];
+
+    const b11 = bElements[0][0],
+      b12 = bElements[0][1],
+      b13 = bElements[0][2],
+      b14 = bElements[0][3];
+    const b21 = bElements[1][0],
+      b22 = bElements[1][1],
+      b23 = bElements[1][2],
+      b24 = bElements[1][3];
+    const b31 = bElements[2][0],
+      b32 = bElements[2][1],
+      b33 = bElements[2][2],
+      b34 = bElements[2][3];
+    const b41 = bElements[3][0],
+      b42 = bElements[3][1],
+      b43 = bElements[3][2],
+      b44 = bElements[3][3];
+
+    tElements[0][0] = a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41;
+    tElements[0][1] = a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42;
+    tElements[0][2] = a11 * b13 + a12 * b23 + a13 * b33 + a14 * b43;
+    tElements[0][3] = a11 * b14 + a12 * b24 + a13 * b34 + a14 * b44;
+
+    tElements[1][0] = a21 * b11 + a22 * b21 + a23 * b31 + a24 * b41;
+    tElements[1][1] = a21 * b12 + a22 * b22 + a23 * b32 + a24 * b42;
+    tElements[1][2] = a21 * b13 + a22 * b23 + a23 * b33 + a24 * b43;
+    tElements[1][3] = a21 * b14 + a22 * b24 + a23 * b34 + a24 * b44;
+
+    tElements[2][0] = a31 * b11 + a32 * b21 + a33 * b31 + a34 * b41;
+    tElements[2][1] = a31 * b12 + a32 * b22 + a33 * b32 + a34 * b42;
+    tElements[2][2] = a31 * b13 + a32 * b23 + a33 * b33 + a34 * b43;
+    tElements[2][3] = a31 * b14 + a32 * b24 + a33 * b34 + a34 * b44;
+
+    tElements[3][0] = a41 * b11 + a42 * b21 + a43 * b31 + a44 * b41;
+    tElements[3][1] = a41 * b12 + a42 * b22 + a43 * b32 + a44 * b42;
+    tElements[3][2] = a41 * b13 + a42 * b23 + a43 * b33 + a44 * b43;
+    tElements[3][3] = a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44;
 
     return this;
   }
