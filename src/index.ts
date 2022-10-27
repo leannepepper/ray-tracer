@@ -13,8 +13,9 @@ const pointB = new Point(1, 2, 3);
 const colorA = new Color(1, 8, 3);
 const colorB = new Color(1, 2, 3);
 
-const matrixA = new Matrix2(9, 7, 6, 5);
+const matrixA = new Matrix4(9, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1);
+const test = matrixA.multiply(colorA);
 
-console.log(matrixA);
+console.log({ matrixA, test });
 const renderer = new WebGLRenderer();
 renderer.makeGreen();
