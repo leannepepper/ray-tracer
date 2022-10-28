@@ -69,3 +69,18 @@ test("Multiply Matrix4 by it's idenity matrix", () => {
     })
   );
 });
+
+test("Transpose Matrix4", () => {
+  expect(
+    new Matrix4(0, 9, 3, 0, 9, 8, 0, 8, 1, 8, 5, 3, 0, 0, 5, 8).transpose()
+  ).toEqual(
+    expect.objectContaining({
+      elements: [
+        [0, 9, 1, 0],
+        [9, 8, 8, 0],
+        [3, 0, 5, 5],
+        [0, 8, 3, 8],
+      ],
+    })
+  );
+});

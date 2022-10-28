@@ -23,6 +23,18 @@ export class Matrix2 {
 
     return this;
   }
+
+  transpose() {
+    const result = new Matrix2();
+
+    result.elements[0][0] = this.elements[0][0];
+    result.elements[0][1] = this.elements[1][0];
+
+    result.elements[1][0] = this.elements[0][1];
+    result.elements[1][1] = this.elements[1][1];
+
+    return result;
+  }
 }
 
 export class Matrix3 {
@@ -68,6 +80,24 @@ export class Matrix3 {
     this.elements[2][2] = n33;
 
     return this;
+  }
+
+  transpose() {
+    const result = new Matrix3();
+
+    result.elements[0][0] = this.elements[0][0];
+    result.elements[0][1] = this.elements[1][0];
+    result.elements[0][2] = this.elements[2][0];
+
+    result.elements[1][0] = this.elements[0][1];
+    result.elements[1][1] = this.elements[1][1];
+    result.elements[1][2] = this.elements[2][1];
+
+    result.elements[2][0] = this.elements[0][2];
+    result.elements[2][1] = this.elements[1][2];
+    result.elements[2][2] = this.elements[2][2];
+
+    return result;
   }
 }
 
@@ -233,5 +263,31 @@ export class Matrix4 {
     tElements[3][3] = a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44;
 
     return this;
+  }
+
+  transpose() {
+    const result = new Matrix4();
+
+    result.elements[0][0] = this.elements[0][0];
+    result.elements[0][1] = this.elements[1][0];
+    result.elements[0][2] = this.elements[2][0];
+    result.elements[0][3] = this.elements[3][0];
+
+    result.elements[1][0] = this.elements[0][1];
+    result.elements[1][1] = this.elements[1][1];
+    result.elements[1][2] = this.elements[2][1];
+    result.elements[1][3] = this.elements[3][1];
+
+    result.elements[2][0] = this.elements[0][2];
+    result.elements[2][1] = this.elements[1][2];
+    result.elements[2][2] = this.elements[2][2];
+    result.elements[2][3] = this.elements[3][2];
+
+    result.elements[3][0] = this.elements[0][3];
+    result.elements[3][1] = this.elements[1][3];
+    result.elements[3][2] = this.elements[2][3];
+    result.elements[3][3] = this.elements[3][3];
+
+    return result;
   }
 }
