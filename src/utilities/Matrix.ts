@@ -138,6 +138,11 @@ export class Matrix4 {
     return this;
   }
 
+  identity() {
+    this.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    return this;
+  }
+
   multiply(b: Matrix4 | Tuple) {
     return this.multiplyMatrices(this, b);
   }
