@@ -1,4 +1,4 @@
-import { Point } from "../src/utilities/Point";
+import { Point } from "../src/math/Point";
 
 test("Point", () => {
   expect(new Point(1, 2, 3)).toEqual(

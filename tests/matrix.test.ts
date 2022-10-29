@@ -1,4 +1,4 @@
-import { Matrix2, Matrix3, Matrix4 } from "../src/utilities/Matrix";
+import { Matrix2, Matrix3, Matrix4 } from "../src/math/matrices/Matrix";
 
 test("Matrix2", () => {
   expect(new Matrix2()).toEqual(

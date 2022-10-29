@@ -1,4 +1,4 @@
-import { Tuple } from "../src/utilities/Tuple";
+import { Tuple } from "../src/math/Tuple";
 
 test("Tuple", () => {
   expect(new Tuple(1, 2, 3, 0)).toEqual(

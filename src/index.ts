@@ -1,7 +1,7 @@
-import { Point } from "./utilities/Point";
-import { Vector } from "./utilities/Vector";
-import { Color } from "./utilities/Color";
-import { Matrix2, Matrix3, Matrix4 } from "./utilities/Matrix";
+import { Point } from "./math/Point";
+import { Vector } from "./math/Vector";
+import { Color } from "./math/Color";
+import { Matrix2, Matrix3, Matrix4 } from "./math/matrices/Matrix";
 import { WebGLRenderer } from "./renderer/WebGLRenderer";
 
 const vectorA = new Vector(1, 8, 3);

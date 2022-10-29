@@ -1,4 +1,4 @@
-import { Vector } from "../src/utilities/Vector";
+import { Vector } from "../src/math/Vector";
 
 test("Vector", () => {
   expect(new Vector(1, 2, 3)).toEqual(
