@@ -35,6 +35,16 @@ export class Matrix2 {
 
     return result;
   }
+
+  determinant() {
+    const a = this.elements[0][0];
+    const b = this.elements[0][1];
+
+    const c = this.elements[1][0];
+    const d = this.elements[1][1];
+
+    return a * d - b * c;
+  }
 }
 
 export class Matrix3 {
@@ -96,6 +106,29 @@ export class Matrix3 {
     result.elements[2][0] = this.elements[0][2];
     result.elements[2][1] = this.elements[1][2];
     result.elements[2][2] = this.elements[2][2];
+
+    return result;
+  }
+
+  submatrix(row: number, column: number) {
+    const result = new Matrix2();
+
+    let r = 0;
+    let c = 0;
+
+    for (let i = 0; i < 3; i++) {
+      if (i === row) continue;
+
+      for (let j = 0; j < 3; j++) {
+        if (j === column) continue;
+
+        result.elements[r][c] = this.elements[i][j];
+        c++;
+      }
+
+      c = 0;
+      r++;
+    }
 
     return result;
   }
@@ -287,6 +320,26 @@ export class Matrix4 {
     result.elements[3][1] = this.elements[1][3];
     result.elements[3][2] = this.elements[2][3];
     result.elements[3][3] = this.elements[3][3];
+
+    return result;
+  }
+
+  submatrix(row: number, column: number) {
+    const result = new Matrix3();
+
+    let r = 0;
+    for (let i = 0; i < 4; i++) {
+      if (i === row) continue;
+
+      let c = 0;
+      for (let j = 0; j < 4; j++) {
+        if (j === column) continue;
+
+        result.elements[r][c] = this.elements[i][j];
+        c++;
+      }
+      r++;
+    }
 
     return result;
   }

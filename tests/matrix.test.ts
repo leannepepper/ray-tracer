@@ -84,3 +84,20 @@ test("Transpose Matrix4", () => {
     })
   );
 });
+
+test("Submatrix Matrix", () => {
+  expect(
+    new Matrix4(1, 5, 0, 3, -3, 2, 7, 4, 3, -9, 8, 2, -9, 4, 4, 1).submatrix(
+      0,
+      2
+    )
+  ).toEqual(
+    expect.objectContaining({
+      elements: [
+        [-3, 2, 4],
+        [3, -9, 2],
+        [-9, 4, 1],
+      ],
+    })
+  );
+});

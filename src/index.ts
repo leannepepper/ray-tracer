@@ -16,6 +16,8 @@ const colorB = new Color(1, 2, 3);
 const matrixA = new Matrix4(9, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1);
 const matrixB = matrixA.transpose();
 
-console.log({ matrixA, matrixB });
+const submatrixA = matrixA.submatrix(1, 1);
+
+console.log({ matrixA, submatrixA });
 const renderer = new WebGLRenderer();
 renderer.makeGreen();
