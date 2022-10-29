@@ -228,4 +228,21 @@ export class Matrix4 {
     }
     return result;
   }
+
+  invert() {
+    const result = new Matrix4();
+
+    const determinant = this.determinant();
+    if (determinant === 0) {
+      throw new Error("Cannot invert a matrix with a determinant of 0");
+    }
+
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        result.elements[i][j] = this.cofactor(j, i) / determinant;
+      }
+    }
+
+    return result;
+  }
 }
