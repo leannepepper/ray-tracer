@@ -91,4 +91,10 @@ export class Matrix3 {
     const submatrix = this.submatrix(row, column);
     return submatrix.determinant();
   }
+
+  // The cofactor is the minor multiplied by -1 if the sum of the row and column is odd
+  cofactor(row: number, column: number) {
+    const minor = this.minor(row, column);
+    return (row + column) % 2 === 0 ? minor : -minor;
+  }
 }
