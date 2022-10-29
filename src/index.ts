@@ -13,11 +13,10 @@ const pointB = new Point(1, 2, 3);
 const colorA = new Color(1, 8, 3);
 const colorB = new Color(1, 2, 3);
 
-const matrixA = new Matrix4(9, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1);
-const matrixB = matrixA.transpose();
+const matrixA = new Matrix3(9, 7, 6, 5, 4, 3, 2, 1, 8);
 
-const submatrixA = matrixA.submatrix(1, 1);
+const minor = matrixA.minor(0, 0);
 
-console.log({ matrixA, submatrixA });
+console.log({ matrixA, minor });
 const renderer = new WebGLRenderer();
 renderer.makeGreen();

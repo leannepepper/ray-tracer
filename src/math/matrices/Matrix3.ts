@@ -85,4 +85,10 @@ export class Matrix3 {
 
     return result;
   }
+
+  // The minot is the determinant of the submatrix
+  minor(row: number, column: number) {
+    const submatrix = this.submatrix(row, column);
+    return submatrix.determinant();
+  }
 }

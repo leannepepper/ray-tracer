@@ -101,3 +101,7 @@ test("Submatrix Matrix", () => {
     })
   );
 });
+
+test("Minor Matrix3", () => {
+  expect(new Matrix3(3, 5, 0, 2, -1, -7, 6, -1, 5).minor(1, 0)).toEqual(25);
+});
