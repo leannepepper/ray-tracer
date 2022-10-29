@@ -97,4 +97,14 @@ export class Matrix3 {
     const minor = this.minor(row, column);
     return (row + column) % 2 === 0 ? minor : -minor;
   }
+
+  determinant() {
+    let result = 0;
+
+    for (let i = 0; i < 3; i++) {
+      result += this.elements[0][i] * this.cofactor(0, i);
+    }
+
+    return result;
+  }
 }

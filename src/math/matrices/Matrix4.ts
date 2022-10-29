@@ -210,4 +210,22 @@ export class Matrix4 {
 
     return result;
   }
+
+  minor(row: number, column: number) {
+    const submatrix = this.submatrix(row, column);
+    return submatrix.determinant();
+  }
+
+  cofactor(row: number, column: number) {
+    const minor = this.minor(row, column);
+    return (row + column) % 2 === 0 ? minor : -minor;
+  }
+
+  determinant() {
+    let result = 0;
+    for (let i = 0; i < 4; i++) {
+      result += this.elements[0][i] * this.cofactor(0, i);
+    }
+    return result;
+  }
 }

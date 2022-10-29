@@ -110,3 +110,30 @@ test("Cofactor Matrix3", () => {
   expect(new Matrix3(3, 5, 0, 2, -1, -7, 6, -1, 5).cofactor(0, 0)).toEqual(-12);
   expect(new Matrix3(3, 5, 0, 2, -1, -7, 6, -1, 5).cofactor(1, 0)).toEqual(-25);
 });
+
+test("Determinant Matrix3", () => {
+  expect(new Matrix3(1, 2, 6, -5, 8, -4, 2, 6, 4).determinant()).toEqual(-196);
+});
+
+test("Determinant Matrix4", () => {
+  expect(
+    new Matrix4(
+      -2,
+      -8,
+      3,
+      5,
+      -3,
+      1,
+      7,
+      3,
+      1,
+      2,
+      -9,
+      6,
+      -6,
+      7,
+      7,
+      -9
+    ).determinant()
+  ).toEqual(-4071);
+});
