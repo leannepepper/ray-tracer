@@ -1,4 +1,6 @@
 import { Matrix2, Matrix3, Matrix4 } from "../src/math/matrices/Matrix";
+import { Point } from "../src/math/Point";
+import { Vector } from "../src/math/Vector";
 
 test("Matrix2", () => {
   expect(new Matrix2()).toEqual(
@@ -173,6 +175,70 @@ test("invert Matrix3", () => {
         [-0.2, 0.3, 1],
         [0.2, -0.3, 0],
       ],
+    })
+  );
+});
+
+test("translate Matrix4", () => {
+  expect(new Matrix4().translate(5, -3, 2)).toEqual(
+    expect.objectContaining({
+      elements: [
+        [1, 0, 0, 5],
+        [0, 1, 0, -3],
+        [0, 0, 1, 2],
+        [0, 0, 0, 1],
+      ],
+    })
+  );
+});
+
+test("translate Matrix3", () => {
+  expect(new Matrix3().translate(5, -3)).toEqual(
+    expect.objectContaining({
+      elements: [
+        [1, 0, 5],
+        [0, 1, -3],
+        [0, 0, 1],
+      ],
+    })
+  );
+});
+
+test("translate a Point", () => {
+  expect(
+    new Matrix4().translate(5, -3, 2).multiply(new Point(-3, 4, 5))
+  ).toEqual(
+    expect.objectContaining({
+      x: 2,
+      y: 1,
+      z: 7,
+      w: 1,
+    })
+  );
+});
+
+test("Multiply by the invert translation of a Point", () => {
+  expect(
+    new Matrix4().translate(5, -3, 2).invert().multiply(new Point(-3, 4, 5))
+  ).toEqual(
+    expect.objectContaining({
+      x: -8,
+      y: 7,
+      z: 3,
+      w: 1,
+    })
+  );
+});
+
+test("translate * Vector has no effect", () => {
+  expect(
+    new Matrix4().translate(5, -3, 2).multiply(new Vector(1, 0, 0))
+  ).toEqual(
+    expect.objectContaining({
+      x: 1,
+      y: 0,
+      z: 0,
+      w: 0,
     })
   );
 });

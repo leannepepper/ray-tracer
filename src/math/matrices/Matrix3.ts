@@ -125,4 +125,9 @@ export class Matrix3 {
 
     return result;
   }
+
+  translate(x: number, y: number) {
+    this.set(1, 0, x, 0, 1, y, 0, 0, 1);
+    return this;
+  }
 }
