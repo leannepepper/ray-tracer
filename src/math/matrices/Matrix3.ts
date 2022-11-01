@@ -130,4 +130,9 @@ export class Matrix3 {
     this.set(1, 0, x, 0, 1, y, 0, 0, 1);
     return this;
   }
+
+  scale(x: number, y: number) {
+    this.set(x, 0, 0, 0, y, 0, 0, 0, 1);
+    return this;
+  }
 }

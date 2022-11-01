@@ -242,3 +242,28 @@ test("translate * Vector has no effect", () => {
     })
   );
 });
+
+test("scale Matrix4", () => {
+  expect(new Matrix4().scale(2, 3, 4)).toEqual(
+    expect.objectContaining({
+      elements: [
+        [2, 0, 0, 0],
+        [0, 3, 0, 0],
+        [0, 0, 4, 0],
+        [0, 0, 0, 1],
+      ],
+    })
+  );
+});
+
+test("scale Matrix3", () => {
+  expect(new Matrix3().scale(2, 3)).toEqual(
+    expect.objectContaining({
+      elements: [
+        [2, 0, 0],
+        [0, 3, 0],
+        [0, 0, 1],
+      ],
+    })
+  );
+});

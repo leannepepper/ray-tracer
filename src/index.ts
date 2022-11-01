@@ -13,10 +13,12 @@ const pointB = new Point(1, 2, 3);
 const colorA = new Color(1, 8, 3);
 const colorB = new Color(1, 2, 3);
 
-const matrixA = new Matrix3(3, 0, 2, 2, 0, -2, 0, 1, 1);
+const matrixA = new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2);
 
-const inverse = matrixA.invert();
+const scaleMatrix = new Matrix4().scale(5, 5, 5);
 
-console.log({ matrixA, inverse });
+const result = scaleMatrix.multiply(pointA);
+
+console.log({ result });
 const renderer = new WebGLRenderer();
 renderer.makeGreen();

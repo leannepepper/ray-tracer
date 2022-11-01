@@ -251,4 +251,10 @@ export class Matrix4 {
 
     return this;
   }
+
+  scale(x: number, y: number, z: number) {
+    this.set(x, 0, 0, 0, 0, y, 0, 0, 0, 0, z, 0, 0, 0, 0, 1);
+
+    return this;
+  }
 }
