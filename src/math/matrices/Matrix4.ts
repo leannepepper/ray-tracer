@@ -257,4 +257,31 @@ export class Matrix4 {
 
     return this;
   }
+
+  rotateX(radians: number) {
+    const c = Math.cos(radians);
+    const s = Math.sin(radians);
+
+    this.set(1, 0, 0, 0, 0, c, -s, 0, 0, s, c, 0, 0, 0, 0, 1);
+
+    return this;
+  }
+
+  rotateY(radians: number) {
+    const c = Math.cos(radians);
+    const s = Math.sin(radians);
+
+    this.set(c, 0, s, 0, 0, 1, 0, 0, -s, 0, c, 0, 0, 0, 0, 1);
+
+    return this;
+  }
+
+  rotateZ(radians: number) {
+    const c = Math.cos(radians);
+    const s = Math.sin(radians);
+
+    this.set(c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+
+    return this;
+  }
 }

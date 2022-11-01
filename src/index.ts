@@ -17,7 +17,9 @@ const matrixA = new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2);
 
 const scaleMatrix = new Matrix4().scale(5, 5, 5);
 
-const result = scaleMatrix.multiply(pointA);
+const rotateXMatrix = new Matrix4().rotateX(Math.PI / 2);
+
+const result = new Matrix4().rotateY(Math.PI / 2);
 
 console.log({ result });
 const renderer = new WebGLRenderer();

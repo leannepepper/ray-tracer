@@ -267,3 +267,38 @@ test("scale Matrix3", () => {
     })
   );
 });
+
+test("rotate Matrix4", () => {
+  expect(new Matrix4().rotateX(Math.PI / 2)).toEqual(
+    expect.objectContaining({
+      elements: [
+        [1, 0, 0, 0],
+        [0, 6.123233995736766e-17, -1, 0],
+        [0, 1, 6.123233995736766e-17, 0],
+        [0, 0, 0, 1],
+      ],
+    })
+  );
+
+  expect(new Matrix4().rotateY(Math.PI / 2)).toEqual(
+    expect.objectContaining({
+      elements: [
+        [6.123233995736766e-17, 0, 1, 0],
+        [0, 1, 0, 0],
+        [-1, 0, 6.123233995736766e-17, 0],
+        [0, 0, 0, 1],
+      ],
+    })
+  );
+
+  expect(new Matrix4().rotateZ(Math.PI / 2)).toEqual(
+    expect.objectContaining({
+      elements: [
+        [6.123233995736766e-17, -1, 0, 0],
+        [1, 6.123233995736766e-17, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1],
+      ],
+    })
+  );
+});
