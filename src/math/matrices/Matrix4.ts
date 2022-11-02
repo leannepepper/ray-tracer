@@ -284,4 +284,17 @@ export class Matrix4 {
 
     return this;
   }
+
+  shear(
+    xy: number,
+    xz: number,
+    yx: number,
+    yz: number,
+    zx: number,
+    zy: number
+  ) {
+    this.set(1, xy, xz, 0, yx, 1, yz, 0, zx, zy, 1, 0, 0, 0, 0, 1);
+
+    return this;
+  }
 }

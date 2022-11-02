@@ -302,3 +302,16 @@ test("rotate Matrix4", () => {
     })
   );
 });
+
+test("shear Matrix4", () => {
+  expect(new Matrix4().shear(1, 0, 0, 0, 0, 0)).toEqual(
+    expect.objectContaining({
+      elements: [
+        [1, 1, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1],
+      ],
+    })
+  );
+});

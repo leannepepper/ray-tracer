@@ -19,8 +19,10 @@ const scaleMatrix = new Matrix4().scale(5, 5, 5);
 
 const rotateXMatrix = new Matrix4().rotateX(Math.PI / 2);
 
-const result = new Matrix4().rotateY(Math.PI / 2);
+const result = new Matrix4().shear(1, 0, 0, 0, 0, 0);
 
-console.log({ result });
+const r2 = result.multiply(pointA);
+
+console.log({ r2 });
 const renderer = new WebGLRenderer();
 renderer.makeGreen();
