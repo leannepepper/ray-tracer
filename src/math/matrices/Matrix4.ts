@@ -1,5 +1,7 @@
 import { Matrix3 } from "./Matrix";
 import { Tuple } from "../Tuple";
+import { Point } from "../Point";
+import { Vector } from "../Vector";
 
 export class Matrix4 {
   elements: number[][];
@@ -73,13 +75,13 @@ export class Matrix4 {
     return this;
   }
 
-  multiply(b: Matrix4 | Tuple) {
+  multiply(b: Matrix4 | Tuple | Point | Vector) {
     return this.multiplyMatrices(this, b);
   }
 
-  multiplyMatrices(a: Matrix4, b: Matrix4 | Tuple) {
+  multiplyMatrices(a: Matrix4, b: Matrix4 | Tuple | Point | Vector) {
     // if matrix is a tuple, then we are multiplying a matrix by a vector
-    if (b instanceof Tuple) {
+    if (b instanceof Tuple || b instanceof Point || b instanceof Vector) {
       const x =
         a.elements[0][0] * b.x +
         a.elements[0][1] * b.y +
