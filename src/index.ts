@@ -3,6 +3,7 @@ import { Vector } from "./math/Vector";
 import { Color } from "./math/Color";
 import { Matrix2, Matrix3, Matrix4 } from "./math/matrices/Matrix";
 import { WebGLRenderer } from "./renderer/WebGLRenderer";
+import { Ray } from "./math/Ray";
 
 const vectorA = new Vector(1, 8, 3);
 const vectorB = new Vector(1, 2, 3);
@@ -15,14 +16,14 @@ const colorB = new Color(1, 2, 3);
 
 const matrixA = new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2);
 
+const rayA = new Ray(new Point(1, 2, 3), new Vector(4, 5, 6));
+
 const scaleMatrix = new Matrix4().scale(5, 5, 5);
 
 const rotateXMatrix = new Matrix4().rotateX(Math.PI / 2);
 
-const result = new Matrix4().shear(1, 0, 0, 0, 0, 0);
+const result = rayA.position(2);
 
-const r2 = result.multiply(pointA);
-
-console.log({ r2 });
+console.log({ rayA, result });
 const renderer = new WebGLRenderer();
 renderer.makeGreen();
