@@ -1,5 +1,23 @@
 import { EPLISILON } from "./mathUtils";
 
+export interface Tuple {
+  x: number;
+  y: number;
+  z: number;
+  w: number;
+
+  add(tuple: Tuple): Tuple;
+  subtract(tuple: Tuple): Tuple;
+  negate(): Tuple;
+  multiply(scalar: number): Tuple;
+  divide(scalar: number): Tuple;
+  magnitude(): number;
+  normalize(): Tuple;
+  dot(tuple: Tuple): number;
+  cross(tuple: Tuple): Tuple;
+  equals(tuple: Tuple): boolean;
+}
+
 export class Tuple {
   x: number;
   y: number;

@@ -1,6 +1,11 @@
 import { Point } from "./Point";
 import { Vector } from "./Vector";
 
+export interface Ray {
+  origin: Point;
+  direction: Vector;
+}
+
 export class Ray {
   origin: Point;
   direction: Vector;

@@ -8,6 +8,13 @@
 
 import { Tuple } from "./Tuple";
 
+export interface Vector extends Tuple {
+  cross(vector: Vector): Vector;
+  dot(vector: Vector): number;
+  magnitude(): number;
+  normalize(): Vector;
+}
+
 export class Vector extends Tuple {
   x: number;
   y: number;

@@ -8,6 +8,8 @@
 
 import { Tuple } from "./Tuple";
 
+export interface Point extends Tuple {}
+
 export class Point extends Tuple {
   x: number;
   y: number;
