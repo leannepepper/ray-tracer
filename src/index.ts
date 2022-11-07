@@ -5,6 +5,7 @@ import { Matrix2, Matrix3, Matrix4 } from "./math/matrices/Matrix";
 import { WebGLRenderer } from "./renderer/WebGLRenderer";
 import { Ray } from "./math/Ray";
 import { Sphere } from "./geometry/Sphere";
+import { Intersections } from "./math/Intersections";
 
 /** Math Utils testing */
 const vectorA = new Vector(1, 8, 3);
@@ -29,17 +30,20 @@ const result = rayA.position(2);
 // console.log({ rayA, result });
 
 /** Geometry testing */
+const intersections = new Intersections();
 
 const sphere1 = new Sphere(new Point(0, 0, 0), 1);
-const ray1 = new Ray(new Point(0, 0, 5), new Vector(0, 0, 1));
+const ray1 = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
 const ray2 = new Ray(new Point(0, 0, 3), new Vector(0, 0, 1));
 
 const intersect1 = sphere1.intersect(ray1);
 const intersect2 = sphere1.intersect(ray2);
 
-const intersections = [...intersect1, ...intersect2];
+intersections.add(intersect1);
+intersections.add(intersect2);
+const hit = intersections.hit();
 
-console.log({ sphere1, intersections });
+console.log({ hit });
 
 /** Render testing */
 const renderer = new WebGLRenderer();

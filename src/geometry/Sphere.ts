@@ -1,17 +1,15 @@
+import { Intersection } from "../math/Intersections";
 import { Point } from "../math/Point";
 import { Ray } from "../math/Ray";
 import { Vector } from "../math/Vector";
+import { Geometry } from "./Geometry";
 
-export interface Intersection {
-  t: number;
-  object: Sphere;
-}
-
-export class Sphere {
+export class Sphere extends Geometry {
   center: Point;
   radius: number;
 
   constructor(center: Point, radius: number) {
+    super();
     this.center = center;
     this.radius = radius;
   }
