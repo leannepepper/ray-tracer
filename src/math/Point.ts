@@ -7,8 +7,12 @@
 //
 
 import { Tuple } from "./Tuple";
+import { Vector } from "./Vector";
 
-export interface Point extends Tuple {}
+export interface Point extends Tuple {
+  cross(point: Point): Point;
+  dot(point: Point): number;
+}
 
 export class Point extends Tuple {
   x: number;
@@ -22,5 +26,34 @@ export class Point extends Tuple {
     this.y = y;
     this.z = z;
     this.w = 1;
+  }
+
+  // The add method adds the corresponding components of the two points together to make a new point.
+  add(point: Point) {
+    return new Point(this.x + point.x, this.y + point.y, this.z + point.z);
+  }
+
+  // The subtract method subtracts the corresponding components of the two points to make a new point.
+  subtract(point: Point) {
+    return new Point(this.x - point.x, this.y - point.y, this.z - point.z);
+  }
+
+  // Multiply a point by a scalar
+  multiply(scalar: number) {
+    return new Point(this.x * scalar, this.y * scalar, this.z * scalar);
+  }
+
+  // The cross product of two vectors is a vector that is perpendicular to both of them.
+  cross(point: Point) {
+    return new Point(
+      this.y * point.z - this.z * point.y,
+      this.z * point.x - this.x * point.z,
+      this.x * point.y - this.y * point.x
+    );
+  }
+
+  // The smaller the angle between two unit vectors, the closer their dot product is to 1. If the dot product is -1 the vectors are pointing in opposite directions.
+  dot(point: Point | Vector) {
+    return this.x * point.x + this.y * point.y + this.z * point.z;
   }
 }

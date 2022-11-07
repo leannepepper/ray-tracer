@@ -6,9 +6,10 @@
 // add, subtract, dot, cross, magnitude, normalize, toString
 //
 
+import { Point } from "./Point";
 import { Tuple } from "./Tuple";
 
-export interface Vector extends Tuple {
+export interface Vector {
   cross(vector: Vector): Vector;
   dot(vector: Vector): number;
   magnitude(): number;
@@ -28,6 +29,36 @@ export class Vector extends Tuple {
     this.w = w ? w : 0;
   }
 
+  // The add method adds the corresponding components of the two vectors together to make a new vector.
+  add(vector: Vector) {
+    return new Vector(
+      this.x + vector.x,
+      this.y + vector.y,
+      this.z + vector.z,
+      this.w + vector.w
+    );
+  }
+
+  // The subtract method subtracts the corresponding components of the two vectors to make a new vector.
+  subtract(vector: Vector) {
+    return new Vector(
+      this.x - vector.x,
+      this.y - vector.y,
+      this.z - vector.z,
+      this.w - vector.w
+    );
+  }
+
+  // Multiply a vector by a scalar
+  multiply(scalar: number) {
+    return new Vector(
+      this.x * scalar,
+      this.y * scalar,
+      this.z * scalar,
+      this.w * scalar
+    );
+  }
+
   // The cross product of two vectors is a vector that is perpendicular to both of them.
   cross(vector: Vector) {
     return new Vector(
@@ -38,7 +69,7 @@ export class Vector extends Tuple {
   }
 
   // The smaller the angle between two unit vectors, the closer their dot product is to 1. If the dot product is -1 the vectors are pointing in opposite directions.
-  dot(vector: Vector) {
+  dot(vector: Vector | Point) {
     return (
       this.x * vector.x +
       this.y * vector.y +

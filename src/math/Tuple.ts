@@ -1,4 +1,5 @@
 import { EPLISILON } from "./mathUtils";
+import { Point } from "./Point";
 
 export interface Tuple {
   x: number;
@@ -11,10 +12,6 @@ export interface Tuple {
   negate(): Tuple;
   multiply(scalar: number): Tuple;
   divide(scalar: number): Tuple;
-  magnitude(): number;
-  normalize(): Tuple;
-  dot(tuple: Tuple): number;
-  cross(tuple: Tuple): Tuple;
   equals(tuple: Tuple): boolean;
 }
 
