@@ -31,9 +31,13 @@ const result = rayA.position(2);
 /** Geometry testing */
 
 const sphere1 = new Sphere(new Point(0, 0, 0), 1);
-const ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+const ray1 = new Ray(new Point(0, 0, 5), new Vector(0, 0, 1));
+const ray2 = new Ray(new Point(0, 0, 3), new Vector(0, 0, 1));
 
-const intersections = sphere1.intersect(ray);
+const intersect1 = sphere1.intersect(ray1);
+const intersect2 = sphere1.intersect(ray2);
+
+const intersections = [...intersect1, ...intersect2];
 
 console.log({ sphere1, intersections });
 

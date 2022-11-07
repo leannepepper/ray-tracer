@@ -23,5 +23,8 @@ test("Sphere intersect", () => {
   const radius = 1;
   const s = new Sphere(center, radius);
   const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
-  expect(s.intersect(r)).toEqual([4, 6]);
+  expect(s.intersect(r)).toEqual([
+    expect.objectContaining({ t: 4 }),
+    expect.objectContaining({ t: 6 }),
+  ]);
 });

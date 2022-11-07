@@ -2,6 +2,11 @@ import { Point } from "../math/Point";
 import { Ray } from "../math/Ray";
 import { Vector } from "../math/Vector";
 
+export interface Intersection {
+  t: number;
+  object: Sphere;
+}
+
 export class Sphere {
   center: Point;
   radius: number;
@@ -11,7 +16,7 @@ export class Sphere {
     this.radius = radius;
   }
 
-  intersect(ray: Ray) {
+  intersect(ray: Ray): Intersection[] {
     const sphereToRay = ray.origin.subtract(this.center);
 
     const a = ray.direction.dot(ray.direction);
@@ -21,11 +26,14 @@ export class Sphere {
 
     if (discriminant < 0) {
       return [];
-    }
+    } else {
+      const t1 = (-b - Math.sqrt(discriminant)) / (2 * a);
+      const t2 = (-b + Math.sqrt(discriminant)) / (2 * a);
 
-    return [
-      (-b - Math.sqrt(discriminant)) / (2 * a),
-      (-b + Math.sqrt(discriminant)) / (2 * a),
-    ];
+      return [
+        { t: t1, object: this },
+        { t: t2, object: this },
+      ];
+    }
   }
 }
