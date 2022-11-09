@@ -1,3 +1,4 @@
+import { Matrix4 } from "./matrices/Matrix4";
 import { Point } from "./Point";
 import { Vector } from "./Vector";
 
@@ -17,5 +18,12 @@ export class Ray {
 
   position(t: number) {
     return this.origin.add(this.direction.multiply(t));
+  }
+
+  transform(matrix: Matrix4) {
+    return new Ray(
+      matrix.multiply(this.origin) as Point,
+      matrix.multiply(this.direction) as Vector
+    );
   }
 }

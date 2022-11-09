@@ -70,12 +70,7 @@ export class Vector extends Tuple {
 
   // The smaller the angle between two unit vectors, the closer their dot product is to 1. If the dot product is -1 the vectors are pointing in opposite directions.
   dot(vector: Vector | Point) {
-    return (
-      this.x * vector.x +
-      this.y * vector.y +
-      this.z * vector.z +
-      this.w * vector.w
-    );
+    return this.x * vector.x + this.y * vector.y + this.z * vector.z;
   }
 
   // The magnitude of a vector is also the length of the vector.

@@ -103,6 +103,14 @@ export class Matrix4 {
         a.elements[3][2] * b.z +
         a.elements[3][3] * b.w;
 
+      if (b instanceof Point) {
+        return new Point(x, y, z);
+      }
+
+      if (b instanceof Vector) {
+        return new Vector(x, y, z, w);
+      }
+
       return new Tuple(x, y, z, w);
     }
 
