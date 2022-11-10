@@ -6,6 +6,7 @@ import { WebGLRenderer } from "./renderer/WebGLRenderer";
 import { Ray } from "./math/Ray";
 import { Sphere } from "./geometry/Sphere";
 import { Intersections } from "./math/Intersections";
+import { Scene } from "./renderer/Scene";
 
 /** Math Utils testing */
 const vectorA = new Vector(1, 8, 3);
@@ -43,8 +44,11 @@ intersections.add(intersect1);
 intersections.add(intersect2);
 const hit = intersections.hit();
 
-console.log({ hit });
-
 /** Render testing */
 const renderer = new WebGLRenderer();
+const ctx = renderer.getContext();
+
+const scene = new Scene();
+scene.add(sphere1);
+
 renderer.makeGreen();
