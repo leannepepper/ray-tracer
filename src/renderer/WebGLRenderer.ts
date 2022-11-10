@@ -1,5 +1,7 @@
 // create a WebGLRenderer class that can be used to create a WebGLRenderer object and canvas element
 
+import { Scene } from "./Scene";
+
 export class WebGLRenderer {
   canvas: HTMLCanvasElement;
   gl: WebGLRenderingContext | null;
@@ -22,19 +24,10 @@ export class WebGLRenderer {
     this.canvas.height = height;
   }
 
-  makeGreen() {
-    if (this.gl) {
-      this.gl.clearColor(0, 1, 0, 1);
-      this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-    }
-  }
-
-  // return the WebGLRenderingContext
   getContext() {
     return this.gl;
   }
 
-  // Save the canvas as a PNG image
   saveAsPNG() {
     this.canvas.toBlob((blob) => {
       saveBlob(
@@ -42,6 +35,20 @@ export class WebGLRenderer {
         `screencapture-${this.canvas.width}x${this.canvas.height}.png`
       );
     });
+  }
+
+  render(scene: Scene) {
+    const gl = this.gl;
+    if (!gl) {
+      return;
+    }
+
+    gl.viewport(0, 0, this.width, this.height);
+    gl.clearColor(0, 0, 0, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    const objects = scene.getObjects();
+    objects.forEach((object) => {});
   }
 }
 

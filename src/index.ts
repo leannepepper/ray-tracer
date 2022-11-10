@@ -51,4 +51,4 @@ const ctx = renderer.getContext();
 const scene = new Scene();
 scene.add(sphere1);
 
-renderer.makeGreen();
+console.log({ scene });
