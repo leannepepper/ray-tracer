@@ -2,11 +2,11 @@ import { Point } from "./math/Point";
 import { Vector } from "./math/Vector";
 import { Color } from "./math/Color";
 import { Matrix2, Matrix3, Matrix4 } from "./math/matrices/Matrix";
-import { WebGLRenderer } from "./renderer/WebGLRenderer";
+import { WebGLRenderer } from "./render/WebGLRenderer";
 import { Ray } from "./math/Ray";
 import { Sphere } from "./geometry/Sphere";
 import { Intersections } from "./math/Intersections";
-import { Scene } from "./renderer/Scene";
+import { Scene } from "./render/Scene";
 
 /** Math Utils testing */
 const vectorA = new Vector(1, 8, 3);
@@ -46,9 +46,13 @@ const hit = intersections.hit();
 
 /** Render testing */
 const renderer = new WebGLRenderer();
-const ctx = renderer.getContext();
-
 const scene = new Scene();
 scene.add(sphere1);
+const imageData = renderer.render(scene);
+const ctx = renderer.getContext();
 
-console.log({ scene });
+if (imageData) {
+  ctx?.putImageData(imageData, 20, 20);
+}
+
+console.log({ ctx });
