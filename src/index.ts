@@ -52,7 +52,7 @@ const imageData = renderer.render(scene);
 const ctx = renderer.getContext();
 
 if (imageData) {
-  ctx?.putImageData(imageData, 20, 20);
+  ctx?.putImageData(imageData, 10, 10);
 }
 
 console.log({ ctx });

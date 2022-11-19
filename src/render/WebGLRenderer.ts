@@ -70,7 +70,7 @@ export class WebGLRenderer {
     var pixelIndex = 0;
 
     for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
+      for (let x = 0; x < this.width; x++, pixelIndex++) {
         var xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectRatio;
         var yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
         var rayDir = new Vector(xx, yy, -1);
@@ -88,6 +88,7 @@ export class WebGLRenderer {
         var r = Math.round(pixelColor.x * 255);
         var g = Math.round(pixelColor.y * 255);
         var b = Math.round(pixelColor.z * 255);
+        console.log({ r, g, b });
 
         bufferView[pixelIndex] =
           (255 << 24) | // alpha
@@ -97,18 +98,9 @@ export class WebGLRenderer {
       }
     }
 
-    const arr = new Uint8ClampedArray(40_000);
-
-    // Fill the array with the same RGBA values
-    for (let i = 0; i < arr.length; i += 4) {
-      arr[i + 0] = 0; // R value
-      arr[i + 1] = 190; // G value
-      arr[i + 2] = 0; // B value
-      arr[i + 3] = 255; // A value
-    }
-
-    const imageData = new ImageData(arr, this.width, this.height);
-    console.log({ imageData });
+    console.log({ bufferView });
+    const buffArr = new Uint8ClampedArray(bufferView.buffer);
+    const imageData = new ImageData(buffArr, this.width, this.height);
 
     return imageData;
   }
