@@ -33,7 +33,7 @@ const result = rayA.position(2);
 /** Geometry testing */
 const intersections = new Intersections();
 
-const sphere1 = new Sphere(new Point(0, 0, 0), 1);
+const sphere1 = new Sphere(new Point(0, 0, 0), 1.0);
 const ray1 = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
 const ray2 = new Ray(new Point(0, 0, 3), new Vector(0, 0, 1));
 

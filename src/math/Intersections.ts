@@ -22,6 +22,8 @@ export class Intersections {
     if (hits.length === 0) {
       return null;
     }
+
+    // Sort by t value and return the first one (closest)
     return hits.reduce((a, b) => (a.t < b.t ? a : b));
   }
 }

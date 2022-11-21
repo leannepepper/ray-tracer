@@ -5,6 +5,7 @@ import { Vector } from "../math/Vector";
 import { Geometry } from "../geometry/Geometry";
 import { Sphere } from "../geometry/Sphere";
 import { Ray } from "../math/Ray";
+import { Point } from "../math/Point";
 
 export class WebGLRenderer {
   canvas: HTMLCanvasElement;
@@ -43,10 +44,25 @@ export class WebGLRenderer {
 
   trace(ray: Ray, object: Sphere) {
     const hit = object.intersect(ray);
+
     if (hit.length > 0) {
-      return new Vector(1, 0, 0);
+      return true;
+      // return new Vector(1, 0, 0);
     }
-    return new Vector(0, 0, 0);
+    return false;
+    //return new Vector(0, 0, 0);
+  }
+
+  getRayDirection(x: number, y: number) {
+    const fov = 90;
+    const aspectRatio = this.width / this.height;
+    const fovRadians = ((fov / 2) * Math.PI) / 180;
+
+    const xComp =
+      (2 * ((x + 0.5) / this.width) - 1) * Math.tan(fovRadians) * aspectRatio;
+    const yComp = (1 - 2 * ((y + 0.5) / this.height)) * Math.tan(fovRadians);
+
+    return new Vector(xComp, yComp, -1).normalize();
   }
 
   render(scene: Scene): ImageData | void {
@@ -56,52 +72,30 @@ export class WebGLRenderer {
     }
 
     const objects = scene.getObjects();
-    const firstObject = objects[0] as Sphere;
-
-    var colorDepth = 4;
-    var buffer = new ArrayBuffer(this.width * this.height * colorDepth);
-    var bufferView = new Uint32Array(buffer);
-    var invWidth = 1 / this.width;
-    var invHeight = 1 / this.height;
-    var fov = 30;
-    var aspectRatio = this.width / this.height;
-    var angle = Math.tan((Math.PI * 0.5 * fov) / 180);
-    var rayOrigin = new Vector(0, 0, 0);
-    var pixelIndex = 0;
+    const firstObject = new Sphere(new Point(0, -1, 0), 1.0);
+    const dataArray = new Uint8ClampedArray(this.width * this.height * 4);
 
     for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++, pixelIndex++) {
-        var xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectRatio;
-        var yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
-        var rayDir = new Vector(xx, yy, -1);
-        rayDir.normalize();
-        const ray = new Ray(rayOrigin, rayDir);
+      for (let x = 0; x < this.width; x++) {
+        const rayDirection = this.getRayDirection(x, y);
+        const ray = new Ray(new Point(0, 0, -3), rayDirection);
+        const hit = this.trace(ray, firstObject);
 
-        // trace
-        var pixelColor = this.trace(ray, firstObject);
-
-        pixelColor.x = Math.min(1, pixelColor.x);
-        pixelColor.y = Math.min(1, pixelColor.y);
-        pixelColor.z = Math.min(1, pixelColor.z);
-
-        // convert pixel to bytes
-        var r = Math.round(pixelColor.x * 255);
-        var g = Math.round(pixelColor.y * 255);
-        var b = Math.round(pixelColor.z * 255);
-        console.log({ r, g, b });
-
-        bufferView[pixelIndex] =
-          (255 << 24) | // alpha
-          (b << 16) | // blue
-          (g << 8) | // green
-          r; // red
+        if (hit) {
+          dataArray[y * this.width * 4 + x * 4 + 0] = 255;
+          dataArray[y * this.width * 4 + x * 4 + 1] = 0;
+          dataArray[y * this.width * 4 + x * 4 + 2] = 0;
+          dataArray[y * this.width * 4 + x * 4 + 3] = 255;
+        } else {
+          dataArray[y * this.width * 4 + x * 4 + 0] = 0;
+          dataArray[y * this.width * 4 + x * 4 + 1] = 0;
+          dataArray[y * this.width * 4 + x * 4 + 2] = 0;
+          dataArray[y * this.width * 4 + x * 4 + 3] = 255;
+        }
       }
     }
 
-    console.log({ bufferView });
-    const buffArr = new Uint8ClampedArray(bufferView.buffer);
-    const imageData = new ImageData(buffArr, this.width, this.height);
-
+    const imageData = new ImageData(dataArray, this.width);
     return imageData;
   }
 }
