@@ -48,11 +48,4 @@ const hit = intersections.hit();
 const renderer = new WebGLRenderer();
 const scene = new Scene();
 scene.add(sphere1);
-const imageData = renderer.render(scene);
-const ctx = renderer.getContext();
-
-if (imageData) {
-  ctx?.putImageData(imageData, 10, 10);
-}
-
-console.log({ ctx });
+renderer.render(scene);

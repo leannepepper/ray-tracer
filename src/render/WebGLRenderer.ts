@@ -72,31 +72,25 @@ export class WebGLRenderer {
     }
 
     const objects = scene.getObjects();
-    const firstObject = new Sphere(new Point(0, -1, 0), 1.0);
+    const firstObject = objects[0] as Sphere;
     const dataArray = new Uint8ClampedArray(this.width * this.height * 4);
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         const rayDirection = this.getRayDirection(x, y);
-        const ray = new Ray(new Point(0, 0, -3), rayDirection);
+        const ray = new Ray(new Point(0, 0, -2), rayDirection);
         const hit = this.trace(ray, firstObject);
 
-        if (hit) {
-          dataArray[y * this.width * 4 + x * 4 + 0] = 255;
-          dataArray[y * this.width * 4 + x * 4 + 1] = 0;
-          dataArray[y * this.width * 4 + x * 4 + 2] = 0;
-          dataArray[y * this.width * 4 + x * 4 + 3] = 255;
-        } else {
-          dataArray[y * this.width * 4 + x * 4 + 0] = 0;
-          dataArray[y * this.width * 4 + x * 4 + 1] = 0;
-          dataArray[y * this.width * 4 + x * 4 + 2] = 0;
-          dataArray[y * this.width * 4 + x * 4 + 3] = 255;
-        }
+        dataArray[y * this.width * 4 + x * 4 + 0] = hit ? 255 : 0;
+        dataArray[y * this.width * 4 + x * 4 + 1] = 0;
+        dataArray[y * this.width * 4 + x * 4 + 2] = 0;
+        dataArray[y * this.width * 4 + x * 4 + 3] = 255;
       }
     }
 
-    const imageData = new ImageData(dataArray, this.width);
-    return imageData;
+    const imageData = new ImageData(dataArray, this.width, this.height);
+
+    gl.putImageData(imageData, 0, 0);
   }
 }
 
