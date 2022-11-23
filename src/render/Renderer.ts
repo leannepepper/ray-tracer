@@ -7,7 +7,7 @@ import { Sphere } from "../geometry/Sphere";
 import { Ray } from "../math/Ray";
 import { Point } from "../math/Point";
 
-export class WebGLRenderer {
+export class Renderer {
   canvas: HTMLCanvasElement;
   gl: CanvasRenderingContext2D | null;
   width: number;

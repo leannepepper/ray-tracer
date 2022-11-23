@@ -2,7 +2,7 @@ import { Point } from "./math/Point";
 import { Vector } from "./math/Vector";
 import { Color } from "./math/Color";
 import { Matrix2, Matrix3, Matrix4 } from "./math/matrices/Matrix";
-import { WebGLRenderer } from "./render/WebGLRenderer";
+import { Renderer } from "./render/Renderer";
 import { Ray } from "./math/Ray";
 import { Sphere } from "./geometry/Sphere";
 import { Intersections } from "./math/Intersections";
@@ -45,7 +45,8 @@ intersections.add(intersect2);
 const hit = intersections.hit();
 
 /** Render testing */
-const renderer = new WebGLRenderer();
+const renderer = new Renderer();
+renderer.setSize(500, 500);
 const scene = new Scene();
 scene.add(sphere1);
 renderer.render(scene);
