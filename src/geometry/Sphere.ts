@@ -38,8 +38,14 @@ export class Sphere extends Geometry {
       { t: t2, object: this },
     ];
   }
-  // the normal for a unit sphere is
+
   normalAt(point: Point): Vector {
-    return point.subtract(this.center).normalize();
+    const objectPoint = this.transform.invert().multiply(point) as Point;
+    const objectNormal = objectPoint.subtract(this.center);
+    const worldNormal = this.transform
+      .invert()
+      .transpose()
+      .multiply(objectNormal) as Vector;
+    return worldNormal.normalize();
   }
 }
