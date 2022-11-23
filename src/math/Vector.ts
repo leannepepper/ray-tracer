@@ -20,6 +20,7 @@ export class Vector extends Tuple {
   x: number;
   y: number;
   z: number;
+  type: string;
 
   constructor(x: number, y: number, z: number, w?: number) {
     super(x, y, z, 0);
@@ -27,6 +28,7 @@ export class Vector extends Tuple {
     this.y = y;
     this.z = z;
     this.w = w ? w : 0;
+    this.type = "vector";
   }
 
   // The add method adds the corresponding components of the two vectors together to make a new vector.

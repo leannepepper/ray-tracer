@@ -75,13 +75,16 @@ export class Matrix4 {
     return this;
   }
 
-  multiply(b: Matrix4 | Tuple | Point | Vector) {
+  multiply(b: Matrix4 | Point | Vector): Matrix4 | Point | Vector {
     return this.multiplyMatrices(this, b);
   }
 
-  multiplyMatrices(a: Matrix4, b: Matrix4 | Tuple | Point | Vector) {
+  multiplyMatrices(
+    a: Matrix4,
+    b: Matrix4 | Point | Vector
+  ): Matrix4 | Point | Vector {
     // if matrix is a tuple, then we are multiplying a matrix by a vector
-    if (b instanceof Tuple || b instanceof Point || b instanceof Vector) {
+    if (b instanceof Point || b instanceof Vector) {
       const x =
         a.elements[0][0] * b.x +
         a.elements[0][1] * b.y +
@@ -110,10 +113,7 @@ export class Matrix4 {
       if (b instanceof Vector) {
         return new Vector(x, y, z, w);
       }
-
-      return new Tuple(x, y, z, w);
     }
-
     const aElements = a.elements;
     const bElements = b.elements;
     const tElements = this.elements;
@@ -239,7 +239,7 @@ export class Matrix4 {
     return result;
   }
 
-  invert() {
+  invert(): Matrix4 {
     const result = new Matrix4();
 
     const determinant = this.determinant();

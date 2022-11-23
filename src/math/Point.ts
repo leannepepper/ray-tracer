@@ -19,6 +19,7 @@ export class Point extends Tuple {
   y: number;
   z: number;
   w: number;
+  type: string;
 
   constructor(x: number, y: number, z: number) {
     super(x, y, z, 1);
@@ -26,6 +27,7 @@ export class Point extends Tuple {
     this.y = y;
     this.z = z;
     this.w = 1;
+    this.type = "point";
   }
 
   // The add method adds the corresponding components of the two points together to make a new point.
@@ -55,5 +57,11 @@ export class Point extends Tuple {
   // The smaller the angle between two unit vectors, the closer their dot product is to 1. If the dot product is -1 the vectors are pointing in opposite directions.
   dot(point: Point | Vector) {
     return this.x * point.x + this.y * point.y + this.z * point.z;
+  }
+
+  // The normal vector of a point is the vector from the origin to the point.
+  // TODO: Is this correct? Should a point have a normalize function?
+  normalize() {
+    return new Vector(this.x, this.y, this.z);
   }
 }

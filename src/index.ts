@@ -44,9 +44,13 @@ intersections.add(intersect1);
 intersections.add(intersect2);
 const hit = intersections.hit();
 
+// Test the normalization of a vector
+const normal = sphere1.normalAt(new Point(0, 1, 0));
+console.log({ normal });
+
 /** Render testing */
 const renderer = new Renderer();
-renderer.setSize(500, 500);
+renderer.setSize(400, 400);
 const scene = new Scene();
 scene.add(sphere1);
 renderer.render(scene);

@@ -38,4 +38,8 @@ export class Sphere extends Geometry {
       { t: t2, object: this },
     ];
   }
+  // the normal for a unit sphere is
+  normalAt(point: Point): Vector {
+    return point.subtract(this.center).normalize();
+  }
 }

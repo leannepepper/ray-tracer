@@ -28,3 +28,11 @@ test("Sphere intersect", () => {
     expect.objectContaining({ t: 6 }),
   ]);
 });
+
+test("Sphere normalAt", () => {
+  const center = new Point(0, 0, 0);
+  const radius = 1;
+  const s = new Sphere(center, radius);
+  const p = new Point(0, 1, 0);
+  expect(s.normalAt(p)).toEqual(expect.objectContaining({ x: 0, y: 1, z: 0 }));
+});
