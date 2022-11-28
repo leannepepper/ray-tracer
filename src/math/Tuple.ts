@@ -1,4 +1,4 @@
-import { EPLISILON } from "./mathUtils";
+import { EPSILON } from "./mathUtils";
 import { Point } from "./Point";
 
 export interface Tuple {
@@ -48,9 +48,9 @@ export class Tuple {
 
   equals(tuple: Tuple) {
     return (
-      Math.abs(this.x - tuple.x) < EPLISILON &&
-      Math.abs(this.y - tuple.y) < EPLISILON &&
-      Math.abs(this.z - tuple.z) < EPLISILON
+      Math.abs(this.x - tuple.x) < EPSILON &&
+      Math.abs(this.y - tuple.y) < EPSILON &&
+      Math.abs(this.z - tuple.z) < EPSILON
     );
   }
 

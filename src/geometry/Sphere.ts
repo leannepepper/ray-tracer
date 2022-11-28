@@ -46,6 +46,6 @@ export class Sphere extends Geometry {
       .invert()
       .transpose()
       .multiply(objectNormal) as Vector;
-    return worldNormal.normalize();
+    return worldNormal.normalize().normalize();
   }
 }

@@ -1,4 +1,5 @@
 import { Sphere } from "../src/geometry/Sphere";
+import { Matrix4 } from "../src/math/matrices/Matrix";
 import { Point } from "../src/math/Point";
 import { Ray } from "../src/math/Ray";
 import { Vector } from "../src/math/Vector";
@@ -60,8 +61,26 @@ test("Sphere normalAtTranslatedSphere", () => {
   expect(s.normalAt(p)).toEqual(
     expect.objectContaining({
       x: 0,
-      y: 0.7071099999999999,
-      z: -0.70711,
+      y: 0.7071067811865475,
+      z: -0.7071067811865476,
+    })
+  );
+});
+
+test("Sphere normalAtTransformedSphere", () => {
+  const center = new Point(0, 0, 0);
+  const radius = 1;
+  const s = new Sphere(center, radius);
+  const rotateZMatrix = new Matrix4().rotateZ(Math.PI / 5);
+  const scaleMatrix = new Matrix4().scale(1, 0.5, 1);
+  const transformMatrix = scaleMatrix.multiply(rotateZMatrix) as Matrix4;
+  s.transform = transformMatrix;
+  const p = new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2);
+  expect(s.normalAt(p)).toEqual(
+    expect.objectContaining({
+      x: 0,
+      y: 0.9701425001453319,
+      z: -0.24253562503633294,
     })
   );
 });

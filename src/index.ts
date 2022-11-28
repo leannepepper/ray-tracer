@@ -51,7 +51,19 @@ const normal = sphere1.normalAt(new Point(0, 1, 0));
 const sphere2 = new Sphere(new Point(0, 0, 0), 1.0);
 sphere2.transform = sphere2.transform.translate(0, 1, 0);
 const normal2 = sphere2.normalAt(new Point(0, 1.70711, -0.70711));
-console.log(normal2);
+//console.log(normal2);
+
+// Test the normal at a transformed sphere
+const sphere3 = new Sphere(new Point(0, 0, 0), 1.0);
+const rotateZMatrix = new Matrix4().rotateZ(Math.PI / 5);
+const scaleMatrix2 = new Matrix4().scale(1, 0.5, 1);
+const transformMatrix = scaleMatrix2.multiply(rotateZMatrix) as Matrix4;
+sphere3.transform = transformMatrix;
+const normal3 = sphere3.normalAt(
+  new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2)
+);
+
+console.log("normal 3", normal3);
 
 /** Render testing */
 const renderer = new Renderer();
