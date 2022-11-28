@@ -36,3 +36,32 @@ test("Sphere normalAt", () => {
   const p = new Point(0, 1, 0);
   expect(s.normalAt(p)).toEqual(expect.objectContaining({ x: 0, y: 1, z: 0 }));
 });
+
+test("Sphere normalAtNonAxialPoint", () => {
+  const center = new Point(0, 0, 0);
+  const radius = 1;
+  const s = new Sphere(center, radius);
+  const p = new Point(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3);
+  expect(s.normalAt(p)).toEqual(
+    expect.objectContaining({
+      x: Math.sqrt(3) / 3,
+      y: Math.sqrt(3) / 3,
+      z: Math.sqrt(3) / 3,
+    })
+  );
+});
+
+test("Sphere normalAtTranslatedSphere", () => {
+  const center = new Point(0, 0, 0);
+  const radius = 1;
+  const s = new Sphere(center, radius);
+  s.transform = s.transform.translate(0, 1, 0);
+  const p = new Point(0, 1.70711, -0.70711);
+  expect(s.normalAt(p)).toEqual(
+    expect.objectContaining({
+      x: 0,
+      y: 0.7071099999999999,
+      z: -0.70711,
+    })
+  );
+});

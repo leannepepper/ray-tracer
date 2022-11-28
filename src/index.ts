@@ -46,7 +46,12 @@ const hit = intersections.hit();
 
 // Test the normalization of a vector
 const normal = sphere1.normalAt(new Point(0, 1, 0));
-console.log({ normal });
+
+// The the normal at a translated sphere
+const sphere2 = new Sphere(new Point(0, 0, 0), 1.0);
+sphere2.transform = sphere2.transform.translate(0, 1, 0);
+const normal2 = sphere2.normalAt(new Point(0, 1.70711, -0.70711));
+console.log(normal2);
 
 /** Render testing */
 const renderer = new Renderer();
