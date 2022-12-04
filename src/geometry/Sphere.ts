@@ -1,3 +1,4 @@
+import { PhongMaterial } from "../materials/PhongMaterial";
 import { Intersection } from "../math/Intersections";
 import { Matrix4 } from "../math/matrices/Matrix4";
 import { Point } from "../math/Point";
@@ -9,12 +10,14 @@ export class Sphere extends Geometry {
   center: Point;
   radius: number;
   transform: Matrix4;
+  material: PhongMaterial;
 
-  constructor(center: Point, radius: number) {
+  constructor(center: Point, radius: number, material?: PhongMaterial) {
     super();
     this.center = center;
     this.radius = radius;
     this.transform = new Matrix4().identity();
+    this.material = material || new PhongMaterial();
   }
 
   intersect(ray: Ray): Intersection[] {
