@@ -84,3 +84,35 @@ test("Sphere normalAtTransformedSphere", () => {
     })
   );
 });
+
+test("Sphere has a default material", () => {
+  const center = new Point(0, 0, 0);
+  const radius = 1;
+  const s = new Sphere(center, radius);
+  expect(s.material).toEqual(
+    expect.objectContaining({
+      color: expect.objectContaining({ r: 1, g: 1, b: 1 }),
+      ambient: 0.1,
+      diffuse: 0.9,
+      specular: 0.9,
+      shininess: 200,
+    })
+  );
+});
+
+test("Sphere may be assigned a material", () => {
+  const center = new Point(0, 0, 0);
+  const radius = 1;
+  const s = new Sphere(center, radius);
+  s.material.ambient = 1;
+  s.material.diffuse = 0;
+  expect(s.material).toEqual(
+    expect.objectContaining({
+      color: expect.objectContaining({ r: 1, g: 1, b: 1 }),
+      ambient: 1,
+      diffuse: 0,
+      specular: 0.9,
+      shininess: 200,
+    })
+  );
+});
