@@ -92,4 +92,12 @@ export class Vector extends Tuple {
       this.w / magnitude
     );
   }
+
+  negate() {
+    return new Vector(-this.x, -this.y, -this.z, -this.w);
+  }
+
+  reflect(normal: Vector) {
+    return this.subtract(normal.multiply(2 * this.dot(normal)));
+  }
 }

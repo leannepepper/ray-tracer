@@ -1,8 +1,7 @@
 import { Vector } from "../math/Vector";
-import { Color } from "../math/Color";
 
 export class PointLight {
-  constructor(public position: Vector, public intensity: Color) {
+  constructor(public position: Vector, public intensity: number) {
     this.position = position;
     this.intensity = intensity;
   }

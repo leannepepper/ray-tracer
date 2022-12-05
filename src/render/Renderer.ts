@@ -6,6 +6,8 @@ import { Geometry } from "../geometry/Geometry";
 import { Sphere } from "../geometry/Sphere";
 import { Ray } from "../math/Ray";
 import { Point } from "../math/Point";
+import { PointLight } from "../lights/PointLight";
+import { Color } from "../math/Color";
 
 export class Renderer {
   canvas: HTMLCanvasElement;
@@ -53,6 +55,33 @@ export class Renderer {
     //return new Vector(0, 0, 0);
   }
 
+  lighting(material, light, point, eye, normal) {
+    const effectiveColor = material.color.multiply(light.intensity);
+
+    return effectiveColor;
+
+    const lightVector = light.position.subtract(point).normalize();
+    const ambient = effectiveColor.multiply(material.ambient);
+    const lightDotNormal = lightVector.dot(normal);
+
+    if (lightDotNormal < 0) {
+      return ambient;
+    }
+
+    const diffuse = effectiveColor.multiply(material.diffuse * lightDotNormal);
+
+    const reflectVector = lightVector.multiply(-1).reflect(normal).normalize();
+    const reflectDotEye = reflectVector.dot(eye);
+
+    if (reflectDotEye <= 0) {
+      return ambient.add(diffuse);
+    }
+
+    const factor = Math.pow(reflectDotEye, material.shininess);
+    const specular = light.intensity * material.specular * factor;
+    return ambient.add(diffuse).add(specular);
+  }
+
   getRayDirection(x: number, y: number) {
     const fov = 90;
     const aspectRatio = this.width / this.height;
@@ -75,15 +104,38 @@ export class Renderer {
     const firstObject = objects[0] as Sphere;
     const dataArray = new Uint8ClampedArray(this.width * this.height * 4);
 
+    // add a light source to the scene
+    const pointLight = new PointLight(new Vector(-10, 10, -10), 0.4);
+
+    // position the camera view in the center
+    const eye = new Point(0, 0, -2);
+
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         const rayDirection = this.getRayDirection(x, y);
         const ray = new Ray(new Point(0, 0, -2), rayDirection);
         const hit = this.trace(ray, firstObject);
 
-        dataArray[y * this.width * 4 + x * 4 + 0] = hit ? 255 : 0;
-        dataArray[y * this.width * 4 + x * 4 + 1] = 0;
-        dataArray[y * this.width * 4 + x * 4 + 2] = 0;
+        //get the normal at the point of intersection
+        const normal = firstObject.normalAt(ray.origin);
+
+        const shadedColor = hit
+          ? this.lighting(
+              firstObject.material,
+              pointLight,
+              new Vector(x, y, 0),
+              eye,
+              normal
+            )
+          : new Vector(0, 0, 0);
+
+        // if (hit) {
+        //   console.log({ shadedColor });
+        // }
+
+        dataArray[y * this.width * 4 + x * 4 + 0] = shadedColor.x;
+        dataArray[y * this.width * 4 + x * 4 + 1] = shadedColor.y;
+        dataArray[y * this.width * 4 + x * 4 + 2] = shadedColor.z;
         dataArray[y * this.width * 4 + x * 4 + 3] = 255;
       }
     }
