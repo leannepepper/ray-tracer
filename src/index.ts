@@ -40,12 +40,12 @@ const ray2 = new Ray(new Point(0, 0, 3), new Vector(0, 0, 1));
 // Add material to sphere
 sphere1.material.color = new Color(255, 100, 1);
 
-const intersect1 = sphere1.intersect(ray1);
-const intersect2 = sphere1.intersect(ray2);
+// const intersect1 = sphere1.intersect(ray1);
+// const intersect2 = sphere1.intersect(ray2);
 
-intersections.add(intersect1);
-intersections.add(intersect2);
-const hit = intersections.hit();
+// intersections.add(intersect1);
+// intersections.add(intersect2);
+// const hit = intersections.hit();
 
 // Test the normalization of a vector
 const normal = sphere1.normalAt(new Point(0, 1, 0));
@@ -65,8 +65,6 @@ sphere3.transform = transformMatrix;
 const normal3 = sphere3.normalAt(
   new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2)
 );
-
-console.log("normal 3", normal3);
 
 /** Render testing */
 const renderer = new Renderer();

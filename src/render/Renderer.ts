@@ -48,17 +48,12 @@ export class Renderer {
     const hit = object.intersect(ray);
 
     if (hit.length > 0) {
-      return true;
-      // return new Vector(1, 0, 0);
+      return hit;
     }
-    return false;
-    //return new Vector(0, 0, 0);
   }
 
   lighting(material, light, point, eye, normal) {
     const effectiveColor = material.color.multiply(light.intensity);
-
-    return effectiveColor;
 
     const lightVector = light.position.subtract(point).normalize();
     const ambient = effectiveColor.multiply(material.ambient);
@@ -70,7 +65,7 @@ export class Renderer {
 
     const diffuse = effectiveColor.multiply(material.diffuse * lightDotNormal);
 
-    const reflectVector = lightVector.multiply(-1).reflect(normal).normalize();
+    const reflectVector = lightVector.multiply(-1).reflect(normal);
     const reflectDotEye = reflectVector.dot(eye);
 
     if (reflectDotEye <= 0) {
@@ -79,7 +74,8 @@ export class Renderer {
 
     const factor = Math.pow(reflectDotEye, material.shininess);
     const specular = light.intensity * material.specular * factor;
-    return ambient.add(diffuse).add(specular);
+
+    return ambient.add(diffuse).add(new Color(specular, specular, specular));
   }
 
   getRayDirection(x: number, y: number) {
@@ -105,38 +101,34 @@ export class Renderer {
     const dataArray = new Uint8ClampedArray(this.width * this.height * 4);
 
     // add a light source to the scene
-    const pointLight = new PointLight(new Vector(-10, 10, -10), 0.4);
+    const pointLight = new PointLight(new Vector(-2, 5, 3), 1.0);
 
     // position the camera view in the center
-    const eye = new Point(0, 0, -2);
+    const eye = new Point(0, 0, 0);
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         const rayDirection = this.getRayDirection(x, y);
-        const ray = new Ray(new Point(0, 0, -2), rayDirection);
+        const ray = new Ray(new Point(0, 0, 2), rayDirection);
         const hit = this.trace(ray, firstObject);
+        const intersection = hit ? hit[1].t : null;
 
-        //get the normal at the point of intersection
-        const normal = firstObject.normalAt(ray.origin);
-
-        const shadedColor = hit
-          ? this.lighting(
-              firstObject.material,
-              pointLight,
-              new Vector(x, y, 0),
-              eye,
-              normal
-            )
-          : new Vector(0, 0, 0);
-
-        // if (hit) {
-        //   console.log({ shadedColor });
-        // }
-
-        dataArray[y * this.width * 4 + x * 4 + 0] = shadedColor.x;
-        dataArray[y * this.width * 4 + x * 4 + 1] = shadedColor.y;
-        dataArray[y * this.width * 4 + x * 4 + 2] = shadedColor.z;
-        dataArray[y * this.width * 4 + x * 4 + 3] = 255;
+        if (intersection) {
+          const point = ray.position(intersection);
+          const normal = firstObject.normalAt(point);
+          const color = this.lighting(
+            firstObject.material,
+            pointLight,
+            point,
+            eye,
+            normal
+          );
+          const index = (x + y * this.width) * 4;
+          dataArray[index] = color.x * 255;
+          dataArray[index + 1] = color.y * 255;
+          dataArray[index + 2] = color.z * 255;
+          dataArray[index + 3] = 255;
+        }
       }
     }
 
