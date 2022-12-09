@@ -54,28 +54,34 @@ export class Renderer {
 
   lighting(material, light, point, eye, normal) {
     const effectiveColor = material.color.multiply(light.intensity);
-
     const lightVector = light.position.subtract(point).normalize();
     const ambient = effectiveColor.multiply(material.ambient);
     const lightDotNormal = lightVector.dot(normal);
 
+    let diffuse;
+    let specular;
+
     if (lightDotNormal < 0) {
-      return ambient;
+      diffuse = new Color(0, 0, 0);
+      specular = new Color(0, 0, 0);
+    } else {
+      diffuse = effectiveColor
+        .multiply(material.diffuse)
+        .multiply(lightDotNormal);
+
+      const reflectVector = lightVector.negate().reflect(normal);
+      console.log({ reflectVector });
+      const reflectDotEye = reflectVector.dot(eye);
+
+      if (reflectDotEye <= 0) {
+        specular = new Color(0, 0, 0);
+      } else {
+        const factor = Math.pow(reflectDotEye, material.shininess);
+        specular = light.intensity.multiply(material.specular).multiply(factor);
+      }
     }
 
-    const diffuse = effectiveColor.multiply(material.diffuse * lightDotNormal);
-
-    const reflectVector = lightVector.multiply(-1).reflect(normal);
-    const reflectDotEye = reflectVector.dot(eye);
-
-    if (reflectDotEye <= 0) {
-      return ambient.add(diffuse);
-    }
-
-    const factor = Math.pow(reflectDotEye, material.shininess);
-    const specular = light.intensity * material.specular * factor;
-
-    return ambient.add(diffuse).add(new Color(specular, specular, specular));
+    return ambient.add(diffuse).add(specular);
   }
 
   getRayDirection(x: number, y: number) {
@@ -101,7 +107,10 @@ export class Renderer {
     const dataArray = new Uint8ClampedArray(this.width * this.height * 4);
 
     // add a light source to the scene
-    const pointLight = new PointLight(new Vector(-2, 5, 3), 1.0);
+    const pointLight = new PointLight(
+      new Vector(-2, 5, 3),
+      new Color(100, 1, 1)
+    );
 
     // position the camera view in the center
     const eye = new Point(0, 0, 0);

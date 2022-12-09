@@ -7,22 +7,32 @@ import { Vector } from "../math/Vector";
 import { Geometry } from "./Geometry";
 
 export class Sphere extends Geometry {
-  center: Point;
+  center: Vector;
   radius: number;
   transform: Matrix4;
   material: PhongMaterial;
+  normals: Vector[];
 
-  constructor(center: Point, radius: number, material?: PhongMaterial) {
+  constructor(center: Vector, radius: number, material?: PhongMaterial) {
     super();
     this.center = center;
     this.radius = radius;
     this.transform = new Matrix4().identity();
     this.material = material || new PhongMaterial();
+
+    this.normals = [
+      new Vector(1, 0, 0),
+      new Vector(0, 1, 0),
+      new Vector(0, 0, 1),
+      new Vector(-1, 0, 0),
+      new Vector(0, -1, 0),
+      new Vector(0, 0, -1),
+    ];
   }
 
   intersect(ray: Ray): Intersection[] {
     // transform ray to object space
-    const rayObjectSpace = ray.transform(this.transform.invert());
+    const rayObjectSpace = ray.applyMatrix4(this.transform.invert());
     const sphereToRay = rayObjectSpace.origin.subtract(this.center);
     const a = rayObjectSpace.direction.dot(rayObjectSpace.direction);
     const b = 2 * rayObjectSpace.direction.dot(sphereToRay);
@@ -42,13 +52,15 @@ export class Sphere extends Geometry {
     ];
   }
 
+  // find the Normal at a point on the surface of the sphere
   normalAt(point: Point): Vector {
-    const objectPoint = this.transform.invert().multiply(point) as Point;
+    const objectPoint = this.transform.invert().multiply(point);
     const objectNormal = objectPoint.subtract(this.center);
     const worldNormal = this.transform
       .invert()
       .transpose()
-      .multiply(objectNormal) as Vector;
-    return worldNormal.normalize().normalize();
+      .multiply(objectNormal);
+    worldNormal.w = 0;
+    return worldNormal.normalize();
   }
 }

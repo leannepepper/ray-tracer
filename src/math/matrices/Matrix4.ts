@@ -75,45 +75,11 @@ export class Matrix4 {
     return this;
   }
 
-  multiply(b: Matrix4 | Point | Vector): Matrix4 | Point | Vector {
+  multiply(b: Matrix4): Matrix4 {
     return this.multiplyMatrices(this, b);
   }
 
-  multiplyMatrices(
-    a: Matrix4,
-    b: Matrix4 | Point | Vector
-  ): Matrix4 | Point | Vector {
-    // if matrix is a tuple, then we are multiplying a matrix by a vector
-    if (b instanceof Point || b instanceof Vector) {
-      const x =
-        a.elements[0][0] * b.x +
-        a.elements[0][1] * b.y +
-        a.elements[0][2] * b.z +
-        a.elements[0][3] * b.w;
-      const y =
-        a.elements[1][0] * b.x +
-        a.elements[1][1] * b.y +
-        a.elements[1][2] * b.z +
-        a.elements[1][3] * b.w;
-      const z =
-        a.elements[2][0] * b.x +
-        a.elements[2][1] * b.y +
-        a.elements[2][2] * b.z +
-        a.elements[2][3] * b.w;
-      const w =
-        a.elements[3][0] * b.x +
-        a.elements[3][1] * b.y +
-        a.elements[3][2] * b.z +
-        a.elements[3][3] * b.w;
-
-      if (b instanceof Point) {
-        return new Point(x, y, z);
-      }
-
-      if (b instanceof Vector) {
-        return new Vector(x, y, z, w);
-      }
-    }
+  multiplyMatrices(a: Matrix4, b: Matrix4): Matrix4 {
     const aElements = a.elements;
     const bElements = b.elements;
     const tElements = this.elements;
