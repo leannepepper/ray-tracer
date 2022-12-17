@@ -126,6 +126,12 @@ export class Renderer {
           dataArray[index + 1] = color.y * 255;
           dataArray[index + 2] = color.z * 255;
           dataArray[index + 3] = 255;
+        } else {
+          const index = (x + y * this.width) * 4;
+          dataArray[index] = 0;
+          dataArray[index + 1] = 0;
+          dataArray[index + 2] = 0;
+          dataArray[index + 3] = 255;
         }
       }
     }
