@@ -6,7 +6,6 @@
 // add, subtract, dot, cross, magnitude, normalize, toString
 //
 
-import { Matrix4 } from "./matrices/Matrix";
 import { Point } from "./Point";
 import { Tuple } from "./Tuple";
 
@@ -100,39 +99,5 @@ export class Vector extends Tuple {
 
   reflect(normal: Vector) {
     return this.subtract(normal.multiply(2 * this.dot(normal)));
-  }
-
-  applyMatrix4(matrix: Matrix4) {
-    const x =
-      this.x * matrix[0][0] +
-      this.y * matrix[1][0] +
-      this.z * matrix[2][0] +
-      this.w * matrix[3][0];
-    const y =
-      this.x * matrix[0][1] +
-      this.y * matrix[1][1] +
-      this.z * matrix[2][1] +
-      this.w * matrix[3][1];
-    const z =
-      this.x * matrix[0][2] +
-      this.y * matrix[1][2] +
-      this.z * matrix[2][2] +
-      this.w * matrix[3][2];
-    const w =
-      this.x * matrix[0][3] +
-      this.y * matrix[1][3] +
-      this.z * matrix[2][3] +
-      this.w * matrix[3][3];
-    return new Vector(x, y, z, w);
-  }
-
-  transformDirection(matrix: Matrix4) {
-    const x =
-      this.x * matrix[0][0] + this.y * matrix[1][0] + this.z * matrix[2][0];
-    const y =
-      this.x * matrix[0][1] + this.y * matrix[1][1] + this.z * matrix[2][1];
-    const z =
-      this.x * matrix[0][2] + this.y * matrix[1][2] + this.z * matrix[2][2];
-    return new Vector(x, y, z);
   }
 }

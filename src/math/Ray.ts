@@ -3,15 +3,15 @@ import { Point } from "./Point";
 import { Vector } from "./Vector";
 
 export interface Ray {
-  origin: Vector;
+  origin: Point;
   direction: Vector;
 }
 
 export class Ray {
-  origin: Vector;
+  origin: Point;
   direction: Vector;
 
-  constructor(origin: Vector, direction: Vector) {
+  constructor(origin: Point, direction: Vector) {
     this.origin = origin;
     this.direction = direction;
   }
@@ -20,10 +20,10 @@ export class Ray {
     return this.origin.add(this.direction.multiply(t));
   }
 
-  applyMatrix4(matrix: Matrix4) {
-    this.origin.applyMatrix4(matrix);
-    this.direction.transformDirection(matrix);
-
-    return this;
+  transform(matrix: Matrix4) {
+    return new Ray(
+      matrix.multiply(this.origin) as Point,
+      matrix.multiply(this.direction) as Vector
+    );
   }
 }

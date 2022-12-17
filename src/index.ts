@@ -33,12 +33,12 @@ const result = rayA.position(2);
 /** Geometry testing */
 const intersections = new Intersections();
 
-const sphere1 = new Sphere(new Point(0, 0, 0), 0.8);
+const sphere1 = new Sphere(new Point(0, 0, 0), 1.0);
 const ray1 = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
 const ray2 = new Ray(new Point(0, 0, 3), new Vector(0, 0, 1));
 
 // Add material to sphere
-sphere1.material.color = new Color(255, 200, 1);
+sphere1.material.color = new Color(255, 100, 1);
 
 // const intersect1 = sphere1.intersect(ray1);
 // const intersect2 = sphere1.intersect(ray2);
@@ -48,12 +48,12 @@ sphere1.material.color = new Color(255, 200, 1);
 // const hit = intersections.hit();
 
 // Test the normalization of a vector
-const normal = sphere1.normalAt(new Point(0, 1, 0));
+// const normal = sphere1.normalAt(new Point(0, 1, 0));
 
 // The the normal at a translated sphere
 const sphere2 = new Sphere(new Point(0, 0, 0), 1.0);
 sphere2.transform = sphere2.transform.translate(0, 1, 0);
-const normal2 = sphere2.normalAt(new Point(0, 1.70711, -0.70711));
+//const normal2 = sphere2.normalAt(new Point(0, 1.70711, -0.70711));
 //console.log(normal2);
 
 // Test the normal at a transformed sphere
@@ -62,9 +62,9 @@ const rotateZMatrix = new Matrix4().rotateZ(Math.PI / 5);
 const scaleMatrix2 = new Matrix4().scale(1, 0.5, 1);
 const transformMatrix = scaleMatrix2.multiply(rotateZMatrix) as Matrix4;
 sphere3.transform = transformMatrix;
-const normal3 = sphere3.normalAt(
-  new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2)
-);
+// const normal3 = sphere3.normalAt(
+//   new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2)
+// );
 
 /** Render testing */
 const renderer = new Renderer();
