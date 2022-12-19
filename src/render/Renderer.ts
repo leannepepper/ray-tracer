@@ -74,7 +74,7 @@ export class Renderer {
     const specular = light.intensity * material.specular * factor;
     console.log({ specular });
 
-    return ambient.add(diffuse); //.add(new Color(specular, specular, specular));
+    return ambient.add(diffuse).add(new Color(specular, specular, specular));
   }
 
   getRayDirection(x: number, y: number) {
@@ -100,7 +100,7 @@ export class Renderer {
     const dataArray = new Uint8ClampedArray(this.width * this.height * 4);
 
     // add a light source to the scene
-    const pointLight = new PointLight(new Vector(-2, 10, -5), 0.85);
+    const pointLight = new PointLight(new Vector(-2, 10, -5), 0.89);
 
     // position the camera view in the center
     const eye = new Point(0, 0, 0);

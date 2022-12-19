@@ -39,6 +39,7 @@ const ray2 = new Ray(new Point(0, 0, 3), new Vector(0, 0, 1));
 
 // Add material to sphere
 sphere1.material.color = new Color(255, 100, 1);
+sphere1.material.ambient = 0.05;
 
 // const intersect1 = sphere1.intersect(ray1);
 // const intersect2 = sphere1.intersect(ray2);
