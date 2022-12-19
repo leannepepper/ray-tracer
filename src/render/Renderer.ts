@@ -72,8 +72,9 @@ export class Renderer {
 
     const factor = Math.pow(reflectDotEye, material.shininess);
     const specular = light.intensity * material.specular * factor;
+    console.log({ specular });
 
-    return ambient.add(diffuse).add(new Color(specular, specular, specular));
+    return ambient.add(diffuse); //.add(new Color(specular, specular, specular));
   }
 
   getRayDirection(x: number, y: number) {
@@ -99,23 +100,24 @@ export class Renderer {
     const dataArray = new Uint8ClampedArray(this.width * this.height * 4);
 
     // add a light source to the scene
-    const pointLight = new PointLight(new Vector(-2, 5, 3), 1.0);
+    const pointLight = new PointLight(new Vector(-2, 10, -5), 0.85);
 
     // position the camera view in the center
     const eye = new Point(0, 0, 0);
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
+        const object = objects[0] as Sphere;
         const rayDirection = this.getRayDirection(x, y);
         const ray = new Ray(new Point(0, 0, 2), rayDirection);
-        const hit = this.trace(ray, firstObject);
+        const hit = this.trace(ray, object);
         const intersection = hit ? hit[1].t : null;
 
         if (intersection) {
           const point = ray.position(intersection);
-          const normal = firstObject.normalAt(point);
+          const normal = object.normalAt(point);
           const color = this.lighting(
-            firstObject.material,
+            object.material,
             pointLight,
             point,
             eye,
@@ -128,9 +130,9 @@ export class Renderer {
           dataArray[index + 3] = 255;
         } else {
           const index = (x + y * this.width) * 4;
-          dataArray[index] = 0;
-          dataArray[index + 1] = 0;
-          dataArray[index + 2] = 0;
+          dataArray[index] = 100;
+          dataArray[index + 1] = 100;
+          dataArray[index + 2] = 100;
           dataArray[index + 3] = 255;
         }
       }
