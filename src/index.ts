@@ -52,7 +52,7 @@ sphere1.material.ambient = 0.05;
 // const normal = sphere1.normalAt(new Point(0, 1, 0));
 
 // The the normal at a translated sphere
-const sphere2 = new Sphere(new Point(2, 0, 0), 1.0);
+const sphere2 = new Sphere(new Point(0, 0, 0), 0.5);
 sphere2.material.color = new Color(200, 100, 1);
 //sphere2.transform = sphere2.transform.translate(0, 1, 0);
 //const normal2 = sphere2.normalAt(new Point(0, 1.70711, -0.70711));
@@ -74,4 +74,11 @@ renderer.setSize(400, 400);
 const scene = new Scene();
 scene.add(sphere1);
 scene.add(sphere2);
+
+const sceneIntersections = intersections.getIntersections(
+  scene,
+  new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
+);
+console.log({ sceneIntersections });
+
 renderer.render(scene);
