@@ -1,10 +1,11 @@
 import { Geometry } from "../geometry/Geometry";
+import { Sphere } from "../geometry/Sphere";
 import { Scene } from "../render/Scene";
 import { Ray } from "./Ray";
 
 export interface Intersection {
   t: number;
-  object: Geometry;
+  object: Sphere;
 }
 
 export class Intersections {
@@ -44,5 +45,25 @@ export class Intersections {
     this.intersections.sort((a, b) => a.t - b.t);
 
     return this;
+  }
+
+  prepareComputations(intersection: Intersection, ray: Ray) {
+    const point = ray.position(intersection.t);
+    let normal = intersection.object.normalAt(point);
+    const eye = ray.direction.negate();
+    const inside = normal.dot(eye) < 0;
+
+    if (inside) {
+      normal = normal.negate();
+    }
+
+    return {
+      t: intersection.t,
+      object: intersection.object,
+      point,
+      eye,
+      normal,
+      inside,
+    };
   }
 }
