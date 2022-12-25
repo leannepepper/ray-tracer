@@ -51,7 +51,8 @@ export class Renderer {
     }
   }
 
-  lighting(light: PointLight, { object: { material }, point, normal, eye }) {
+  lighting(lights: PointLight[], { object: { material }, point, normal, eye }) {
+    const light = lights[0];
     const effectiveColor = material.color.multiply(light.intensity);
 
     const lightVector = light.position.subtract(point).normalize();
@@ -96,10 +97,8 @@ export class Renderer {
     }
 
     const objects = scene.getObjects();
+    const sceneLights = scene.getLights();
     const dataArray = new Uint8ClampedArray(this.width * this.height * 4);
-
-    // add a light source to the scene
-    const pointLight = new PointLight(new Vector(2, -5, 5), 0.89);
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -114,7 +113,7 @@ export class Renderer {
             hit[1],
             ray
           );
-          const color = this.lighting(pointLight, shadingInfo);
+          const color = this.lighting(sceneLights, shadingInfo);
           const index = (x + y * this.width) * 4;
           dataArray[index] = color.x * 255;
           dataArray[index + 1] = color.y * 255;

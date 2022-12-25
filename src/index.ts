@@ -7,6 +7,7 @@ import { Ray } from "./math/Ray";
 import { Sphere } from "./geometry/Sphere";
 import { Intersections } from "./math/Intersections";
 import { Scene } from "./render/Scene";
+import { PointLight } from "./lights/PointLight";
 
 /** Math Utils testing */
 const vectorA = new Vector(1, 8, 3);
@@ -70,10 +71,11 @@ sphere3.transform = transformMatrix;
 
 /** Render testing */
 const renderer = new Renderer();
+const pointLight = new PointLight(new Vector(2, -5, 5), 0.89);
 renderer.setSize(400, 400);
 const scene = new Scene();
 scene.add(sphere1);
-scene.add(sphere2);
+scene.add(pointLight);
 
 const sceneIntersections = intersections.getIntersections(
   scene,
