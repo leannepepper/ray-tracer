@@ -6,6 +6,7 @@
 // add, subtract, dot, cross, magnitude, normalize, toString
 //
 
+import { Matrix4 } from "./matrices/Matrix4";
 import { Tuple } from "./Tuple";
 import { Vector } from "./Vector";
 
@@ -63,5 +64,31 @@ export class Point extends Tuple {
   // TODO: Is this correct? Should a point have a normalize function?
   normalize() {
     return new Vector(this.x, this.y, this.z);
+  }
+
+  // apply a matrix to a point
+  applyMatrix4(matrix: Matrix4) {
+    const x =
+      this.x * matrix.m00 +
+      this.y * matrix.m01 +
+      this.z * matrix.m02 +
+      this.w * matrix.m03;
+    const y =
+      this.x * matrix.m10 +
+      this.y * matrix.m11 +
+      this.z * matrix.m12 +
+      this.w * matrix.m13;
+    const z =
+      this.x * matrix.m20 +
+      this.y * matrix.m21 +
+      this.z * matrix.m22 +
+      this.w * matrix.m23;
+    const w =
+      this.x * matrix.m30 +
+      this.y * matrix.m31 +
+      this.z * matrix.m32 +
+      this.w * matrix.m33;
+
+    return new Point(x, y, z);
   }
 }

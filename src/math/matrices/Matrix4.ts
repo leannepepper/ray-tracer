@@ -5,6 +5,22 @@ import { Vector } from "../Vector";
 
 export class Matrix4 {
   elements: number[][];
+  m00: number;
+  m01: number;
+  m02: number;
+  m03: number;
+  m10: number;
+  m11: number;
+  m12: number;
+  m13: number;
+  m20: number;
+  m21: number;
+  m22: number;
+  m23: number;
+  m30: number;
+  m31: number;
+  m32: number;
+  m33: number;
 
   constructor(
     n11: number = 1,
@@ -30,6 +46,22 @@ export class Matrix4 {
       [n31, n32, n33, n34],
       [n41, n42, n43, n44],
     ];
+    this.m00 = n11;
+    this.m01 = n12;
+    this.m02 = n13;
+    this.m03 = n14;
+    this.m10 = n21;
+    this.m11 = n22;
+    this.m12 = n23;
+    this.m13 = n24;
+    this.m20 = n31;
+    this.m21 = n32;
+    this.m22 = n33;
+    this.m23 = n34;
+    this.m30 = n41;
+    this.m31 = n42;
+    this.m32 = n43;
+    this.m33 = n44;
   }
 
   set(
