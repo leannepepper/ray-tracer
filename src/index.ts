@@ -8,6 +8,7 @@ import { Sphere } from "./geometry/Sphere";
 import { Intersections } from "./math/Intersections";
 import { Scene } from "./render/Scene";
 import { PointLight } from "./lights/PointLight";
+import { Camera } from "./camera/Camera";
 
 /** Math Utils testing */
 const vectorA = new Vector(1, 8, 3);
@@ -83,4 +84,11 @@ const sceneIntersections = intersections.getIntersections(
 );
 console.log({ sceneIntersections });
 
-renderer.render(scene);
+const camera = new Camera(200, 200, Math.PI / 3);
+console.log("pixel size", camera.pixelSize);
+// move the camera back 5 units
+camera.setTransform(
+  new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 2, 0, 0, 0, 1)
+);
+
+renderer.render(scene, camera);

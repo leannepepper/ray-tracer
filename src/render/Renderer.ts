@@ -7,6 +7,7 @@ import { Point } from "../math/Point";
 import { PointLight } from "../lights/PointLight";
 import { Color } from "../math/Color";
 import { Intersections } from "../math/Intersections";
+import { Camera } from "../camera/Camera";
 
 export class Renderer {
   canvas: HTMLCanvasElement;
@@ -78,19 +79,20 @@ export class Renderer {
     return ambient.add(diffuse).add(new Color(specular, specular, specular));
   }
 
-  getRayDirection(x: number, y: number) {
-    const fov = 90;
-    const aspectRatio = this.width / this.height;
-    const fovRadians = ((fov / 2) * Math.PI) / 180;
+  //This is the first version of a default camera. It is not used anymore.
+  // getRayDirection(x: number, y: number) {
+  //   const fov = 90;
+  //   const aspectRatio = this.width / this.height;
+  //   const fovRadians = ((fov / 2) * Math.PI) / 180;
 
-    const xComp =
-      (2 * ((x + 0.5) / this.width) - 1) * Math.tan(fovRadians) * aspectRatio;
-    const yComp = (1 - 2 * ((y + 0.5) / this.height)) * Math.tan(fovRadians);
+  //   const xComp =
+  //     (2 * ((x + 0.5) / this.width) - 1) * Math.tan(fovRadians) * aspectRatio;
+  //   const yComp = (1 - 2 * ((y + 0.5) / this.height)) * Math.tan(fovRadians);
 
-    return new Vector(xComp, yComp, -1).normalize();
-  }
+  //   return new Vector(xComp, yComp, -1).normalize();
+  // }
 
-  render(scene: Scene): ImageData | void {
+  render(scene: Scene, camera: Camera): ImageData | void {
     const gl = this.gl;
     if (!gl) {
       return;
@@ -103,8 +105,9 @@ export class Renderer {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         const object = objects[0];
-        const rayDirection = this.getRayDirection(x, y);
-        const ray = new Ray(new Point(0, 0, 2), rayDirection);
+        // const rayDirection = this.getRayDirection(x, y);
+        const ray = camera.rayForPixel(x, y);
+        // const ray = new Ray(new Point(0, 0, 2), rayDirection);
         const hit = this.trace(ray, object);
         const intersection = hit ? hit[1].t : null;
 
