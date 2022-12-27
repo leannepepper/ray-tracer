@@ -56,7 +56,7 @@ class Camera {
       this.transform.invert()
     );
     const origin = new Point(0, 0, 0).applyMatrix4(this.transform.invert());
-    const direction = pixel.subtract(origin).normalize();
+    const direction = pixel.subtract(origin).normalize().normalize();
 
     return new Ray(origin, direction);
   }
