@@ -1,6 +1,7 @@
 import { Matrix4 } from "../math/matrices/Matrix4";
 import { Point } from "../math/Point";
 import { Ray } from "../math/Ray";
+import { Vector } from "../math/Vector";
 
 class Camera {
   hsize: number;
@@ -20,8 +21,33 @@ class Camera {
     this.getPixelSize();
   }
 
-  setTransform(transform: Matrix4) {
-    this.transform = transform;
+  setTransform(from: Point, to: Point, up: Vector) {
+    const forward = to.subtract(from).normalize();
+    const upn = up.normalize();
+    const left = forward.cross(upn);
+    const trueUp = left.cross(forward);
+    const orientation = new Matrix4(
+      left.x,
+      left.y,
+      left.z,
+      0,
+      trueUp.x,
+      trueUp.y,
+      trueUp.z,
+      0,
+      -forward.x,
+      -forward.y,
+      -forward.z,
+      0,
+      0,
+      0,
+      0,
+      1
+    );
+
+    this.transform = orientation.multiply(
+      new Matrix4().translate(-from.x, -from.y, -from.z)
+    ) as Matrix4;
   }
 
   private getPixelSize() {

@@ -35,7 +35,7 @@ const result = rayA.position(2);
 /** Geometry testing */
 const intersections = new Intersections();
 
-const sphere1 = new Sphere(new Point(0, 0, 0), 1.0);
+const sphere1 = new Sphere(new Point(0, 0, -2), 1.0);
 const ray1 = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
 const ray2 = new Ray(new Point(0, 0, 3), new Vector(0, 0, 1));
 
@@ -84,11 +84,13 @@ const sceneIntersections = intersections.getIntersections(
 );
 console.log({ sceneIntersections });
 
-const camera = new Camera(200, 200, Math.PI / 3);
+const camera = new Camera(400, 400, 90);
 console.log("pixel size", camera.pixelSize);
 // move the camera back 5 units
 camera.setTransform(
-  new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 2, 0, 0, 0, 1)
+  new Point(0, 0, 1),
+  new Point(0, 0, 0),
+  new Vector(0, 1, 0)
 );
 
 renderer.render(scene, camera);
