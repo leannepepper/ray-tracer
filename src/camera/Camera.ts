@@ -66,22 +66,18 @@ class Camera {
   }
 
   rayForPixel(px: number, py: number) {
-    // the offset from the edge of the canvas to the pixel's center
-    const xOffset = (px + 0.5) * this.pixelSize;
-    const yOffset = (py + 0.5) * this.pixelSize;
+    const xoffset = (px + 0.5) * this.pixelSize;
+    const yoffset = (py + 0.5) * this.pixelSize;
 
-    // the untransformed coordinates of the pixel in world space.
-    // (remember that the camera looks toward -z, so +x is to the *left*.)
-    const worldX = this.halfWidth - xOffset;
-    const worldY = this.halfHeight - yOffset;
+    const worldX = this.halfWidth - xoffset;
+    const worldY = this.halfHeight - yoffset;
 
-    // using the camera matrix, transform the canvas point and the origin,
-    // and then compute the ray's direction vector.
-    // (remember that the canvas is at z=-1)
-    const pixel = new Point(worldX, worldY, -1).applyMatrix4(
-      this.transform.invert()
-    );
-    const origin = new Point(0, 0, 0).applyMatrix4(this.transform.invert());
+    const pixel = this.transform
+      .invert()
+      .multiply(new Point(worldX, worldY, -1)) as Point;
+    const origin = this.transform
+      .invert()
+      .multiply(new Point(0, 0, 0)) as Point;
     const direction = pixel.subtract(origin).normalize().normalize();
 
     return new Ray(origin, direction);
