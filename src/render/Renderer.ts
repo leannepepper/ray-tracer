@@ -98,37 +98,41 @@ export class Renderer {
       return;
     }
 
-    const objects = scene.getObjects();
     const sceneLights = scene.getLights();
+    const intersections = new Intersections();
     const dataArray = new Uint8ClampedArray(this.width * this.height * 4);
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        const object = objects[0];
         // const rayDirection = this.getRayDirection(x, y);
-        const ray = camera.rayForPixel(x, y);
         // const ray = new Ray(new Point(0, 0, 2), rayDirection);
-        const hit = this.trace(ray, object);
-        const intersection = hit ? hit[1].t : null;
+        //const hit = this.trace(ray, object);
 
-        if (intersection && hit) {
-          const shadingInfo = new Intersections().prepareComputations(
-            hit[1],
-            ray
-          );
-          const color = this.lighting(sceneLights, shadingInfo);
-          const index = (x + y * this.width) * 4;
-          dataArray[index] = color.x * 255;
-          dataArray[index + 1] = color.y * 255;
-          dataArray[index + 2] = color.z * 255;
-          dataArray[index + 3] = 255;
-        } else {
-          const index = (x + y * this.width) * 4;
-          dataArray[index] = 100;
-          dataArray[index + 1] = 100;
-          dataArray[index + 2] = 100;
-          dataArray[index + 3] = 255;
-        }
+        // const ray = camera.rayForPixel(x, y);
+        const ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
+
+        //const intersection = intersections.getIntersections(scene, ray);
+        //console.log({ intersection });
+
+        // if (intersection.length > 0) {
+        //   //console.log({ intersections });
+        //   const shadingInfo = intersections.prepareComputations(
+        //     intersection[0],
+        //     ray
+        //   );
+        //   const color = this.lighting(sceneLights, shadingInfo);
+        //   const index = (x + y * this.width) * 4;
+        //   dataArray[index] = color.x * 255;
+        //   dataArray[index + 1] = color.y * 255;
+        //   dataArray[index + 2] = color.z * 255;
+        //   dataArray[index + 3] = 255;
+        // } else {
+        //   const index = (x + y * this.width) * 4;
+        //   dataArray[index] = 100;
+        //   dataArray[index + 1] = 100;
+        //   dataArray[index + 2] = 100;
+        //   dataArray[index + 3] = 255;
+        // }
       }
     }
 

@@ -42,6 +42,8 @@ export class Intersections {
     });
 
     // Sort by minimum positive t value
+    // FOR NOW - Remove negative t values
+    this.intersections = this.intersections.filter((i) => i.t >= 0);
     this.intersections.sort((a, b) => a.t - b.t);
 
     return this;
