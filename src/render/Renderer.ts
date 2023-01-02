@@ -44,14 +44,6 @@ export class Renderer {
     });
   }
 
-  trace(ray: Ray, object: Geometry) {
-    const hit = object.intersect(ray);
-
-    if (hit.length > 0) {
-      return hit;
-    }
-  }
-
   lighting(lights: PointLight[], { object: { material }, point, normal, eye }) {
     const light = lights[0];
     const effectiveColor = material.color.multiply(light.intensity);
@@ -80,17 +72,17 @@ export class Renderer {
   }
 
   //This is the first version of a default camera. It is not used anymore.
-  // getRayDirection(x: number, y: number) {
-  //   const fov = 90;
-  //   const aspectRatio = this.width / this.height;
-  //   const fovRadians = ((fov / 2) * Math.PI) / 180;
+  getRayDirection(x: number, y: number) {
+    const fov = 90;
+    const aspectRatio = this.width / this.height;
+    const fovRadians = ((fov / 2) * Math.PI) / 180;
 
-  //   const xComp =
-  //     (2 * ((x + 0.5) / this.width) - 1) * Math.tan(fovRadians) * aspectRatio;
-  //   const yComp = (1 - 2 * ((y + 0.5) / this.height)) * Math.tan(fovRadians);
+    const xComp =
+      (2 * ((x + 0.5) / this.width) - 1) * Math.tan(fovRadians) * aspectRatio;
+    const yComp = (1 - 2 * ((y + 0.5) / this.height)) * Math.tan(fovRadians);
 
-  //   return new Vector(xComp, yComp, -1).normalize();
-  // }
+    return new Vector(xComp, yComp, -1).normalize();
+  }
 
   render(scene: Scene, camera: Camera): ImageData | void {
     const gl = this.gl;
@@ -104,35 +96,30 @@ export class Renderer {
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        // const rayDirection = this.getRayDirection(x, y);
-        // const ray = new Ray(new Point(0, 0, 2), rayDirection);
-        //const hit = this.trace(ray, object);
+        //const rayDirection = this.getRayDirection(x, y);
+        //const ray = new Ray(new Point(0, 0, 2), rayDirection);
 
-        // const ray = camera.rayForPixel(x, y);
-        const ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
+        const ray = camera.rayForPixel(x, y);
+        const hits = intersections.getIntersections(scene, ray);
 
-        //const intersection = intersections.getIntersections(scene, ray);
-        //console.log({ intersection });
-
-        // if (intersection.length > 0) {
-        //   //console.log({ intersections });
-        //   const shadingInfo = intersections.prepareComputations(
-        //     intersection[0],
-        //     ray
-        //   );
-        //   const color = this.lighting(sceneLights, shadingInfo);
-        //   const index = (x + y * this.width) * 4;
-        //   dataArray[index] = color.x * 255;
-        //   dataArray[index + 1] = color.y * 255;
-        //   dataArray[index + 2] = color.z * 255;
-        //   dataArray[index + 3] = 255;
-        // } else {
-        //   const index = (x + y * this.width) * 4;
-        //   dataArray[index] = 100;
-        //   dataArray[index + 1] = 100;
-        //   dataArray[index + 2] = 100;
-        //   dataArray[index + 3] = 255;
-        // }
+        if (hits.intersections.length > 0) {
+          const shadingInfo = intersections.prepareComputations(
+            hits.intersections[0],
+            ray
+          );
+          const color = this.lighting(sceneLights, shadingInfo);
+          const index = (x + y * this.width) * 4;
+          dataArray[index] = color.x * 255;
+          dataArray[index + 1] = color.y * 255;
+          dataArray[index + 2] = color.z * 255;
+          dataArray[index + 3] = 255;
+        } else {
+          const index = (x + y * this.width) * 4;
+          dataArray[index] = 100;
+          dataArray[index + 1] = 100;
+          dataArray[index + 2] = 100;
+          dataArray[index + 3] = 255;
+        }
       }
     }
 

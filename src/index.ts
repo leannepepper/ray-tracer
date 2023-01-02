@@ -22,10 +22,10 @@ sphere3.transform = transformMatrix;
 
 /** Render testing */
 const renderer = new Renderer();
-renderer.setSize(400, 400);
+renderer.setSize(100, 100);
 
 const scene = new Scene();
-const camera = new Camera(400, 400, 90);
+const camera = new Camera(100, 100, 90);
 const pointLight = new PointLight(new Vector(2, -5, 5), 0.89);
 
 // Objects
@@ -51,8 +51,9 @@ camera.setTransform(
 //test the Intersections
 const ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
 const intersections = new Intersections();
-const test = intersections.getIntersections(scene, ray);
+//const test = intersections.getIntersections(scene, ray);
+//const hitData = intersections.prepareComputations(test.intersections[0], ray);
 
-//console.log({ test });
+//console.log({ test, hitData });
 
 renderer.render(scene, camera);
